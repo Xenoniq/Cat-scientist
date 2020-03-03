@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Кот-Учёный</string>
+    <string name="start">Начать</string>
+    <string name="back">Назад</string>
+    <string name="hello">Привет, я Кот-Учёный!Со мной ты можешь играть и учиться!</string>
+    <string name="math_1">Сравни числа</string>
+    <string name="math_2">Выбери фигуру</string>
+    <string name="level_3"></string>
+    <string name="level_4">Планеты солнечной системы</string>
+    <string name="ChooseLvl">Выбери уровень!</string>
+    <string name="ChooseCtg">Выбери категорию!</string>
+    <string name="Lvl">Уровень:</string>
+    <string name="Continue">Продолжить</string>
+    <string name="category_1">Математика</string>
+    <string name="category_2">Русский язык</string>
+    <string name="category_3">Логика</string>
+    <string name="category_4">Окружающий мир</string>
+    <string name="Math">Математика</string>
+</resources>
