@@ -4,6 +4,7 @@
     <string name="back">Назад</string>
     <string name="hello">Привет, я Кот-Учёный!Со мной ты можешь играть и учиться!</string>
     <string name="math_1">Сравни числа</string>
+    <string name="logic">Убери лишнее</string>
     <string name="math_2">Выбери фигуру</string>
     <string name="level_3"></string>
     <string name="level_4">Планеты солнечной системы</string>

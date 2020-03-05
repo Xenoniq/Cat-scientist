@@ -1,34 +1,32 @@
 package com.example.viktorina;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Categories extends AppCompatActivity {
+public class Logic extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.categories);
+        setContentView(R.layout.logic);
 
         Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Button button_back = (Button) findViewById(R.id.button_back);
+        Button button_back = (Button) findViewById(R.id.button_backtoctg);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    Intent intent = new Intent(Categories.this, MainActivity.class);
+                    Intent intent = new Intent(Logic.this, Categories.class);
                     startActivity(intent);
                     finish();
                 } catch (Exception e) {
@@ -36,13 +34,13 @@ public class Categories extends AppCompatActivity {
                 }
             }
         });
-        //Переход в категорию математика - нч
-        TextView lvl1 = (TextView)findViewById(R.id.ctg_1);
+        //Переход на уровень 1 - нч
+        TextView lvl1 = (TextView)findViewById(R.id.logic);
         lvl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    Intent intent = new Intent(Categories.this, Math.class);
+                    Intent intent = new Intent(Logic.this, Logic_1.class);
                     startActivity(intent);finish();
                 }catch (Exception e){
 
@@ -50,22 +48,7 @@ public class Categories extends AppCompatActivity {
 
             }
         });
-        //Переход в категорию математика- кц
-        //Переход в категорию логика - нч
-        TextView lvl2 = (TextView)findViewById(R.id.ctg_3);
-        lvl2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Categories.this, Logic.class);
-                    startActivity(intent);finish();
-                }catch (Exception e){
-
-                }
-
-            }
-        });
-        //Переход в категорию логика- кц
+        //Переход на уровень 1 - кц
     }
 
 
@@ -73,7 +56,7 @@ public class Categories extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
-            Intent intent = new Intent(Categories.this, MainActivity.class);
+            Intent intent = new Intent(Logic.this, Categories.class);
             startActivity(intent);
             finish();
         } catch (Exception e) {
