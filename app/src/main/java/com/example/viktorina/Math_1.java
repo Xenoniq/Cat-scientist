@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -18,24 +19,26 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import java.util.Random;
 
 public class Math_1 extends AppCompatActivity {
     Dialog dialog;
+    Dialog dialogEnd;
+    Dialog dialogHelp;
     public int numLeft;
     public  int numRight;
     public int count = 0;
     Array array = new Array();
     Random random = new Random();
+    private ImageView help;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.universal);
-        TextView text_lvl =(TextView)findViewById(R.id.text_lvls);
-        text_lvl.setText(R.string.Math);
         final ImageView img_left = (ImageView) findViewById(R.id.img_left);
         final ImageView img_right = (ImageView) findViewById(R.id.img_right);
         //Скругление углов
@@ -79,7 +82,63 @@ public class Math_1 extends AppCompatActivity {
             //Продолжить - кц
         dialog.show();
                 //Вызов диалогового окна - кц
-                //Кнопка назад - нч
+
+        //Диалоговое окно помощь - нач
+        dialogHelp = new Dialog(this);
+        dialogHelp.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogHelp.setContentView(R.layout.dialoghelp);
+        dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogHelp.setCancelable(false);
+        final VideoView videoView = (VideoView) dialogHelp.findViewById(R.id.vidHelp);
+        Uri numVideoUri= Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.nums);
+        videoView.setVideoURI(numVideoUri);
+        videoView.start();
+
+        Button but_cont = (Button)dialogHelp.findViewById(R.id.buttoncont);
+        but_cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    videoView.pause();
+                    dialogHelp.dismiss();
+                }catch (Exception e){
+
+                }
+            }
+        });
+        //Диалоговое окно помощь - кц
+                //Кнопка помощь - нач
+        help = (ImageView)findViewById(R.id.help);
+        help.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialogHelp.show();
+                                    }
+                                }
+        );
+            //нопка помощь - кц
+        //Диалоговое окно в конце уровня - нач
+        dialogEnd = new Dialog(this);
+        dialogEnd.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogEnd.setContentView(R.layout.dialogend);
+        dialogEnd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogEnd.setCancelable(false);
+        //Продолжить - нч
+        Button btncont = (Button)dialogEnd.findViewById(R.id.butcont);
+        btncont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent(Math_1.this,Math.class);
+                    startActivity(intent);finish();
+                }catch (Exception e){
+
+                }
+                dialogEnd.dismiss();
+            }
+        });
+        //Диалоговое окно в конце уровня - кц
+            //Кнопка назад - нч
         Button button_back = (Button)findViewById(R.id.button_back);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +151,7 @@ public class Math_1 extends AppCompatActivity {
                 }
             }
         });
-                //Кнопка назад - кц
+        //Кнопка назад - кц
         //Массив для прогресса игры нч
         final int[] progress = {
                 R.id.point1, R.id.point2, R.id.point3, R.id.point4, R.id.point5, R.id.point6, R.id.point7,
@@ -157,7 +216,7 @@ public class Math_1 extends AppCompatActivity {
 
                         }
                         if(count==20){
-
+                            dialogEnd.show();
                         }else {
                             numLeft = random.nextInt(10);
                             img_left.setImageResource(array.images1[numLeft]);
@@ -224,7 +283,7 @@ public class Math_1 extends AppCompatActivity {
 
                     }
                     if(count==20){
-
+                        dialogEnd.show();
                     }else {
                         numLeft = random.nextInt(10);
                         img_left.setImageResource(array.images1[numLeft]);

@@ -1,5 +1,6 @@
 package com.example.viktorina;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +49,22 @@ public class Math extends AppCompatActivity {
 
             }
         });
-        //Переход на уровень 1 - кц
+//        //Переход на уровень 1 - кц
+//        //Переход на уровень 2 - нч
+//        TextView lvl2 = (TextView)findViewById(R.id.math_2);
+//        lvl1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    Intent intent = new Intent(Math.this, Math_2.class);
+//                    startActivity(intent);finish();
+//                }catch (Exception e){
+//
+//                }
+//
+//            }
+//        });
+//        //Переход на уровень 1 - кц
     }
 
 

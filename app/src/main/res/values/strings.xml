@@ -6,8 +6,7 @@
     <string name="math_1">Сравни числа</string>
     <string name="logic">Убери лишнее</string>
     <string name="math_2">Выбери фигуру</string>
-    <string name="level_3"></string>
-    <string name="level_4">Планеты солнечной системы</string>
+    <string name="okr_mir"></string>
     <string name="ChooseLvl">Выбери уровень!</string>
     <string name="ChooseCtg">Выбери категорию!</string>
     <string name="Lvl">Уровень:</string>
