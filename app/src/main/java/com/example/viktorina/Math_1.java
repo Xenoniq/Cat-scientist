@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +34,11 @@ public class Math_1 extends AppCompatActivity {
     Array array = new Array();
     Random random = new Random();
     private ImageView help;
+    private MediaPlayer catSd;
+    private MediaPlayer endlvl;
+    private MediaPlayer truesd;
+    private MediaPlayer falsesd;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -46,6 +52,12 @@ public class Math_1 extends AppCompatActivity {
         img_right.setClipToOutline(true);
         //Скругление углов
 
+        catSd = MediaPlayer.create(this,R.raw.numsdescp);
+        endlvl = MediaPlayer.create(this,R.raw.complete);
+        truesd = MediaPlayer.create(this,R.raw.truesd);
+        falsesd = MediaPlayer.create(this,R.raw.falsesd);
+
+
         //Игра на весь икран - нч
         Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -56,6 +68,7 @@ public class Math_1 extends AppCompatActivity {
         dialog.setContentView(R.layout.previewdialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
+        soundPlay(catSd);
         //Кнопка закрытия окна - нч
         TextView btnclose =(TextView)dialog.findViewById(R.id.button_close);
         btnclose.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +81,7 @@ public class Math_1 extends AppCompatActivity {
 
                 }
                 dialog.dismiss();
+                soundStop(catSd);
             }
         });
         //Кнопка закрытия окна - кц
@@ -76,6 +90,7 @@ public class Math_1 extends AppCompatActivity {
         btncontinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundStop(catSd);
                 dialog.dismiss();
             }
         });
@@ -134,6 +149,7 @@ public class Math_1 extends AppCompatActivity {
                 }catch (Exception e){
 
                 }
+                soundStop(endlvl);
                 dialogEnd.dismiss();
             }
         });
@@ -178,8 +194,11 @@ public class Math_1 extends AppCompatActivity {
                     img_right.setEnabled(false);
                         if(numLeft>numRight){
                         img_left.setImageResource(R.drawable.imgtrue);
-                    } else {
+                        soundPlay(truesd);
+                    }
+                        else {
                             img_left.setImageResource((R.drawable.imgfalse));
+                            soundPlay(falsesd);
                     }
                 }
                     else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -216,6 +235,7 @@ public class Math_1 extends AppCompatActivity {
 
                         }
                         if(count==20){
+                            soundPlay(endlvl);
                             dialogEnd.show();
                         }else {
                             numLeft = random.nextInt(10);
@@ -245,8 +265,10 @@ public class Math_1 extends AppCompatActivity {
                     img_left.setEnabled(false);
                     if(numLeft<numRight){
                         img_right.setImageResource(R.drawable.imgtrue);
+                        soundPlay(truesd);
                     } else {
                         img_right.setImageResource((R.drawable.imgfalse));
+                        soundPlay(falsesd);
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -262,9 +284,8 @@ public class Math_1 extends AppCompatActivity {
                             TextView tv = findViewById(progress[i]);
                             tv.setBackgroundResource(R.drawable.style_points_purp);
                         }
-
-
-                    }else {
+                    }
+                    else {
                         if(count>0){
                             if(count==1){
                                 count=0;
@@ -283,8 +304,10 @@ public class Math_1 extends AppCompatActivity {
 
                     }
                     if(count==20){
+                        soundPlay(endlvl);
                         dialogEnd.show();
-                    }else {
+                    }
+                    else {
                         numLeft = random.nextInt(10);
                         img_left.setImageResource(array.images1[numLeft]);
                         img_left.startAnimation(a);
@@ -317,4 +340,12 @@ public class Math_1 extends AppCompatActivity {
         }
     }
     //Сиситемная кнопка назад - конец
+
+    public void soundPlay(MediaPlayer sd){
+        sd.start();
+    }
+
+    public void soundStop(MediaPlayer sd){
+        sd.stop();
+    }
 }

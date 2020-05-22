@@ -43,4 +43,112 @@ public class Array {
             R.drawable.fish_3,
             R.drawable.bird
     };
+    final int[] figures = {
+            R.drawable.circle,
+            R.drawable.square,
+            R.drawable.star,
+            R.drawable.triangle,
+            R.drawable.heart,
+            R.drawable.rectangle
+    };
+    final int[] textFigures = {
+            R.string.circle,
+            R.string.square,
+            R.string.star,
+            R.string.triangle,
+            R.string.heart,
+            R.string.rectangle
+    };
+
+    final int[] textLetters = {
+            R.string.vowel,
+            R.string.consonant,
+    };
+
+    final int[] textSounds = {
+            R.string.sonorous,
+            R.string.muffled,
+    };
+
+    final int[] letters = {
+            R.drawable.a,
+            R.drawable.y,
+            R.drawable.e,
+            R.drawable.bi,
+            R.drawable.o,
+            R.drawable.ae,
+            R.drawable.ya,
+            R.drawable.i,
+            R.drawable.u,
+            R.drawable.yo,
+            R.drawable.ikr,
+            R.drawable.c,
+            R.drawable.k,
+            R.drawable.n,
+            R.drawable.g,
+            R.drawable.sh,
+            R.drawable.shi,
+            R.drawable.z,
+            R.drawable.h,
+            R.drawable.f,
+            R.drawable.v,
+            R.drawable.p,
+            R.drawable.r,
+            R.drawable.l,
+            R.drawable.d,
+            R.drawable.j,
+            R.drawable.ch,
+            R.drawable.s,
+            R.drawable.m,
+            R.drawable.t,
+            R.drawable.b
+    };
+
+    final int[] sounds = {
+            R.drawable.bsound,
+            R.drawable.vsound,
+            R.drawable.gsound,
+            R.drawable.dsound,
+            R.drawable.jsound,
+            R.drawable.zsound,
+            R.drawable.isound,
+            R.drawable.lsound,
+            R.drawable.msound,
+            R.drawable.nsound,
+            R.drawable.rsound,
+            R.drawable.ksound,
+            R.drawable.psound,
+            R.drawable.ssound,
+            R.drawable.tsound,
+            R.drawable.fsound,
+            R.drawable.hsound,
+            R.drawable.csound,
+            R.drawable.chsound,
+            R.drawable.shsound,
+            R.drawable.shisound
+    };
+
+    final int[] textAnimals = {
+          R.string.pet,
+          R.string.wild
+    };
+
+    final int[] animals = {
+            R.drawable.cow,
+            R.drawable.goat,
+            R.drawable.hen,
+            R.drawable.horse,
+            R.drawable.pig,
+            R.drawable.rabbit,
+            R.drawable.sheep,
+            R.drawable.bear,
+            R.drawable.elephant,
+            R.drawable.fox,
+            R.drawable.giraffe,
+            R.drawable.kangaroo,
+            R.drawable.wolf,
+            R.drawable.zebra
+    };
+
+
 }

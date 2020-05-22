@@ -7,12 +7,13 @@
     tools:context=".MainActivity">
 
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/main_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/main_backgraund" />
+        android:scaleType="fitXY"
+        android:src="@drawable/main_backgraund_gif">
+    </pl.droidsonroids.gif.GifImageView>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,8 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:padding="10dp"
-        android:orientation="horizontal">
-
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/buttonStart"
@@ -57,10 +57,10 @@
         android:layout_gravity="center"
         android:layout_marginStart="55dp"
         android:layout_marginLeft="55dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="242dp"
         android:layout_marginEnd="55dp"
         android:layout_marginRight="55dp"
-        android:layout_marginBottom="123dp"
+        android:layout_marginBottom="89dp"
         android:src="@drawable/cat_main_img" />
 
 </RelativeLayout>

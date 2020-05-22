@@ -15,7 +15,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView cat;
-    private MediaPlayer catSd;
+    private MediaPlayer hello;
 
 
 
@@ -23,10 +23,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cat = (ImageView)findViewById(R.id.cat);
+        hello = MediaPlayer.create(this,R.raw.hello);
+        imClick();
+        soundPlay(hello);
         Button buttStart = (Button)findViewById(R.id.buttonStart);
         buttStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundStop(hello);
                 try {
                     Intent intent = new Intent(MainActivity.this, Categories.class);
                     startActivity(intent);finish();
@@ -38,16 +43,13 @@ public class MainActivity extends AppCompatActivity {
         });
         Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        cat = (ImageView)findViewById(R.id.cat);
-        catSd = MediaPlayer.create(this,R.raw.catsd);
-        imClick();
     }
     public void imClick() {
         cat.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        soundPlay(catSd);
+                        soundPlay(hello);
                     }
                 }
         );
@@ -58,5 +60,7 @@ public class MainActivity extends AppCompatActivity {
     public void soundPlay(MediaPlayer sd){
         sd.start();
     }
-
+    public void soundStop(MediaPlayer sd){
+        sd.stop();
+    }
 }
