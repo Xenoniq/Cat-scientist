@@ -57,6 +57,8 @@ public class World_1 extends AppCompatActivity {
 
         catSd = MediaPlayer.create(this,R.raw.animalsdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
+        truesd = MediaPlayer.create(this,R.raw.truesd);
+        falsesd = MediaPlayer.create(this,R.raw.falsesd);
         catSd.start();
 
         //Игра на весь икран - нч
