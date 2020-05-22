@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class Math_1 extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class Math_1 extends AppCompatActivity {
     Dialog dialogEnd;
     Dialog dialogHelp;
     public int numLeft;
-    public  int numRight;
+    public int numRight;
     public int count = 0;
     Array array = new Array();
     Random random = new Random();
@@ -52,15 +53,15 @@ public class Math_1 extends AppCompatActivity {
         img_right.setClipToOutline(true);
         //Скругление углов
 
-        catSd = MediaPlayer.create(this,R.raw.numsdescp);
-        endlvl = MediaPlayer.create(this,R.raw.complete);
-        truesd = MediaPlayer.create(this,R.raw.truesd);
-        falsesd = MediaPlayer.create(this,R.raw.falsesd);
+        catSd = MediaPlayer.create(this, R.raw.numsdescp);
+        endlvl = MediaPlayer.create(this, R.raw.complete);
+        truesd = MediaPlayer.create(this, R.raw.truesd);
+        falsesd = MediaPlayer.create(this, R.raw.falsesd);
 
 
         //Игра на весь икран - нч
         Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         //Игра на весь икран - кц
         //Вызов диалогового окна
         dialog = new Dialog(this);
@@ -70,14 +71,15 @@ public class Math_1 extends AppCompatActivity {
         dialog.setCancelable(false);
         catSd.start();
         //Кнопка закрытия окна - нч
-        TextView btnclose =(TextView)dialog.findViewById(R.id.button_close);
+        TextView btnclose = (TextView) dialog.findViewById(R.id.button_close);
         btnclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     Intent intent = new Intent(Math_1.this, Math.class);
-                    startActivity(intent);finish();
-                }catch (Exception e){
+                    startActivity(intent);
+                    finish();
+                } catch (Exception e) {
 
                 }
                 dialog.dismiss();
@@ -85,8 +87,8 @@ public class Math_1 extends AppCompatActivity {
             }
         });
         //Кнопка закрытия окна - кц
-            //Продолжить - нч
-        Button btncontinue = (Button)dialog.findViewById(R.id.buttoncontinue);
+        //Продолжить - нч
+        Button btncontinue = (Button) dialog.findViewById(R.id.buttoncontinue);
         btncontinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,9 +96,9 @@ public class Math_1 extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-            //Продолжить - кц
+        //Продолжить - кц
         dialog.show();
-                //Вызов диалогового окна - кц
+        //Вызов диалогового окна - кц
 
         //Диалоговое окно помощь - нач
         dialogHelp = new Dialog(this);
@@ -105,25 +107,25 @@ public class Math_1 extends AppCompatActivity {
         dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogHelp.setCancelable(false);
         final VideoView videoView = (VideoView) dialogHelp.findViewById(R.id.vidHelp);
-        Uri numVideoUri= Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.nums);
+        Uri numVideoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.nums);
         videoView.setVideoURI(numVideoUri);
         videoView.start();
 
-        Button but_cont = (Button)dialogHelp.findViewById(R.id.buttoncont);
+        Button but_cont = (Button) dialogHelp.findViewById(R.id.buttoncont);
         but_cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     videoView.pause();
                     dialogHelp.dismiss();
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
         });
         //Диалоговое окно помощь - кц
-                //Кнопка помощь - нач
-        help = (ImageView)findViewById(R.id.help);
+        //Кнопка помощь - нач
+        help = (ImageView) findViewById(R.id.help);
         help.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -131,7 +133,7 @@ public class Math_1 extends AppCompatActivity {
                                     }
                                 }
         );
-            //нопка помощь - кц
+        //нопка помощь - кц
         //Диалоговое окно в конце уровня - нач
         dialogEnd = new Dialog(this);
         dialogEnd.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -139,14 +141,15 @@ public class Math_1 extends AppCompatActivity {
         dialogEnd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogEnd.setCancelable(false);
         //Продолжить - нч
-        Button btncont = (Button)dialogEnd.findViewById(R.id.butcont);
+        Button btncont = (Button) dialogEnd.findViewById(R.id.butcont);
         btncont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    Intent intent = new Intent(Math_1.this,Math.class);
-                    startActivity(intent);finish();
-                }catch (Exception e){
+                    Intent intent = new Intent(Math_1.this, Math.class);
+                    startActivity(intent);
+                    finish();
+                } catch (Exception e) {
 
                 }
                 endlvl.stop();
@@ -154,15 +157,16 @@ public class Math_1 extends AppCompatActivity {
             }
         });
         //Диалоговое окно в конце уровня - кц
-            //Кнопка назад - нч
-        Button button_back = (Button)findViewById(R.id.button_back);
+        //Кнопка назад - нч
+        Button button_back = (Button) findViewById(R.id.button_back);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     Intent intent = new Intent(Math_1.this, Math.class);
-                    startActivity(intent);finish();
-                }catch (Exception e){
+                    startActivity(intent);
+                    finish();
+                } catch (Exception e) {
 
                 }
             }
@@ -175,145 +179,164 @@ public class Math_1 extends AppCompatActivity {
                 R.id.point14, R.id.point15, R.id.point16, R.id.point17, R.id.point18, R.id.point19, R.id.point20,};
         //Массив для прогресса игры кц
         //Анимация- нч
-        final Animation a  = AnimationUtils.loadAnimation(Math_1.this,R.anim.alpha);
+        final Animation a = AnimationUtils.loadAnimation(Math_1.this, R.anim.alpha);
         //Анимация - кц
         numLeft = random.nextInt(10);
         img_left.setImageResource(array.images1[numLeft]);
         numRight = random.nextInt(10);
         //Цикл проверяющий равенство чисел справа и слева - нц
-         while (numLeft==numRight){
-             numRight = random.nextInt(10);
-         }
+        while (numLeft == numRight) {
+            numRight = random.nextInt(10);
+        }
         //Цикл проверяющий равенство чисел справа и слева - кц
         img_right.setImageResource(array.images1[numRight]);
-         //Нажатие на левую картинку нч
+        //Нажатие на левую картинку нч
         img_left.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction()== MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     img_right.setEnabled(false);
-                        if(numLeft>numRight){
+                    if (numLeft > numRight) {
+                        truesd.stop();
+                        try {
+                            truesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_left.setImageResource(R.drawable.imgtrue);
                         truesd.start();
-                    }
-                        else {
-                            img_left.setImageResource((R.drawable.imgfalse));
-                            falsesd.start();
-                    }
-                }
-                    else if(event.getAction()==MotionEvent.ACTION_UP){
-                        if(numLeft>numRight){
-                            if(count<20){
-                                count=count+1;
-                            }
-                            for (int i = 0; i<20;i++){
-                                TextView tv = findViewById(progress[i]);
-                                tv.setBackgroundResource(R.drawable.style_points);
-                            }
-                            for(int i=0; i<count;i++){
-                                TextView tv = findViewById(progress[i]);
-                                tv.setBackgroundResource(R.drawable.style_points_purp);
-                            }
-
-
-                        }else {
-                            if(count>0){
-                                if(count==1){
-                                    count=0;
-                                }else {
-                                    count=count-2;
-                                }
-                            }
-                            for (int i = 0; i<19;i++){
-                                TextView tv = findViewById(progress[i]);
-                                tv.setBackgroundResource(R.drawable.style_points);
-                            }
-                            for(int i=0; i<count;i++){
-                                TextView tv = findViewById(progress[i]);
-                                tv.setBackgroundResource(R.drawable.style_points_purp);
-                            }
-
-                        }
-                        if(count==20){
-                            endlvl.start();
-                            dialogEnd.show();
-                        }else {
-                            numLeft = random.nextInt(10);
-                            img_left.setImageResource(array.images1[numLeft]);
-                            img_left.startAnimation(a);
-                            numRight = random.nextInt(10);
-                            //Цикл проверяющий равенство чисел справа и слева - нц
-                            while (numLeft==numRight){
-                                numRight = random.nextInt(10);
-                            }
-                            //Цикл проверяющий равенство чисел справа и слева - кц
-                            img_right.setImageResource(array.images1[numRight]);
-                            img_right.startAnimation(a);
-                            img_right.setEnabled(true);
-
-                        }
-                    }
-                return true;
-            }
-    });
-         //Нажатие на левую картинку кц
-        //Нажатие на правую картинку нч
-        img_right.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction()== MotionEvent.ACTION_DOWN){
-                    img_left.setEnabled(false);
-                    if(numLeft<numRight){
-                        img_right.setImageResource(R.drawable.imgtrue);
-                        truesd.start();
                     } else {
-                        img_right.setImageResource((R.drawable.imgfalse));
+                        falsesd.stop();
+                        try {
+                            falsesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        img_left.setImageResource((R.drawable.imgfalse));
                         falsesd.start();
                     }
-                }
-                else if(event.getAction()==MotionEvent.ACTION_UP){
-                    if(numLeft<numRight){
-                        if(count<20){
-                            count=count+1;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (numLeft > numRight) {
+                        if (count < 20) {
+                            count = count + 1;
                         }
-                        for (int i = 0; i<20;i++){
+                        for (int i = 0; i < 20; i++) {
                             TextView tv = findViewById(progress[i]);
                             tv.setBackgroundResource(R.drawable.style_points);
                         }
-                        for(int i=0; i<count;i++){
+                        for (int i = 0; i < count; i++) {
                             TextView tv = findViewById(progress[i]);
                             tv.setBackgroundResource(R.drawable.style_points_purp);
                         }
-                    }
-                    else {
-                        if(count>0){
-                            if(count==1){
-                                count=0;
-                            }else {
-                                count=count-2;
+
+
+                    } else {
+                        if (count > 0) {
+                            if (count == 1) {
+                                count = 0;
+                            } else {
+                                count = count - 2;
                             }
                         }
-                        for (int i = 0; i<19;i++){
+                        for (int i = 0; i < 19; i++) {
                             TextView tv = findViewById(progress[i]);
                             tv.setBackgroundResource(R.drawable.style_points);
                         }
-                        for(int i=0; i<count;i++){
+                        for (int i = 0; i < count; i++) {
                             TextView tv = findViewById(progress[i]);
                             tv.setBackgroundResource(R.drawable.style_points_purp);
                         }
 
                     }
-                    if(count==20){
+                    if (count == 20) {
                         endlvl.start();
                         dialogEnd.show();
-                    }
-                    else {
+                    } else {
                         numLeft = random.nextInt(10);
                         img_left.setImageResource(array.images1[numLeft]);
                         img_left.startAnimation(a);
                         numRight = random.nextInt(10);
                         //Цикл проверяющий равенство чисел справа и слева - нц
-                        while (numLeft==numRight){
+                        while (numLeft == numRight) {
+                            numRight = random.nextInt(10);
+                        }
+                        //Цикл проверяющий равенство чисел справа и слева - кц
+                        img_right.setImageResource(array.images1[numRight]);
+                        img_right.startAnimation(a);
+                        img_right.setEnabled(true);
+
+                    }
+                }
+                return true;
+            }
+        });
+        //Нажатие на левую картинку кц
+        //Нажатие на правую картинку нч
+        img_right.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    img_left.setEnabled(false);
+                    if (numLeft < numRight) {
+                        truesd.stop();
+                        try {
+                            truesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        img_right.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
+                    } else {
+                        falsesd.stop();
+                        try {
+                            falsesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        img_right.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
+                    }
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (numLeft < numRight) {
+                        if (count < 20) {
+                            count = count + 1;
+                        }
+                        for (int i = 0; i < 20; i++) {
+                            TextView tv = findViewById(progress[i]);
+                            tv.setBackgroundResource(R.drawable.style_points);
+                        }
+                        for (int i = 0; i < count; i++) {
+                            TextView tv = findViewById(progress[i]);
+                            tv.setBackgroundResource(R.drawable.style_points_purp);
+                        }
+                    } else {
+                        if (count > 0) {
+                            if (count == 1) {
+                                count = 0;
+                            } else {
+                                count = count - 2;
+                            }
+                        }
+                        for (int i = 0; i < 19; i++) {
+                            TextView tv = findViewById(progress[i]);
+                            tv.setBackgroundResource(R.drawable.style_points);
+                        }
+                        for (int i = 0; i < count; i++) {
+                            TextView tv = findViewById(progress[i]);
+                            tv.setBackgroundResource(R.drawable.style_points_purp);
+                        }
+
+                    }
+                    if (count == 20) {
+                        endlvl.start();
+                        dialogEnd.show();
+                    } else {
+                        numLeft = random.nextInt(10);
+                        img_left.setImageResource(array.images1[numLeft]);
+                        img_left.startAnimation(a);
+                        numRight = random.nextInt(10);
+                        //Цикл проверяющий равенство чисел справа и слева - нц
+                        while (numLeft == numRight) {
                             numRight = random.nextInt(10);
                         }
                         //Цикл проверяющий равенство чисел справа и слева - кц
@@ -328,6 +351,7 @@ public class Math_1 extends AppCompatActivity {
         });
         //Нажатие на правую картинку кц
     }
+
     //Системная кнопка назад - начало
     @Override
     public void onBackPressed() {
