@@ -36,6 +36,8 @@ public class Rus_1 extends AppCompatActivity {
     private MediaPlayer endlvl;
     private MediaPlayer vowel;
     private MediaPlayer consonant;
+    private MediaPlayer truesd;
+    private MediaPlayer falsesd;
     Array array = new Array();
     Random random = new Random();
     private ImageView help;
@@ -54,6 +56,8 @@ public class Rus_1 extends AppCompatActivity {
         //Скругление углов
         catSd = MediaPlayer.create(this,R.raw.lettersdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
+        truesd = MediaPlayer.create(this,R.raw.truesd);
+        falsesd = MediaPlayer.create(this,R.raw.falsesd);
         catSd.start();
 
         //Игра на весь икран - нч
@@ -221,15 +225,19 @@ public class Rus_1 extends AppCompatActivity {
                         case 0:
                             if (numLeft < 10) {
                                 img_left.setImageResource(R.drawable.imgtrue);
+                                truesd.start();
                             } else {
                                 img_left.setImageResource((R.drawable.imgfalse));
+                                falsesd.start();
                             }
                             break;
                         case 1:
                             if (numLeft > 9) {
                                 img_left.setImageResource(R.drawable.imgtrue);
+                                truesd.start();
                             } else {
                                 img_left.setImageResource(R.drawable.imgfalse);
+                                falsesd.start();
                             }
                             break;
                     }
@@ -353,15 +361,19 @@ public class Rus_1 extends AppCompatActivity {
                         case 0:
                             if (numRight < 10) {
                                 img_right.setImageResource(R.drawable.imgtrue);
+                                truesd.start();
                             } else {
                                 img_right.setImageResource((R.drawable.imgfalse));
+                                falsesd.start();
                             }
                             break;
                         case 1:
                             if (numRight > 9) {
                                 img_right.setImageResource(R.drawable.imgtrue);
+                                truesd.start();
                             } else {
                                 img_right.setImageResource(R.drawable.imgfalse);
+                                falsesd.start();
                             }
                             break;
                     }

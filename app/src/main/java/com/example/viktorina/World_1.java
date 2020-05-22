@@ -36,6 +36,8 @@ public class World_1 extends AppCompatActivity {
     private MediaPlayer endlvl;
     private MediaPlayer pet;
     private MediaPlayer wild;
+    private MediaPlayer truesd;
+    private MediaPlayer falsesd;
     Array array = new Array();
     Random random = new Random();
     private ImageView help;
@@ -223,15 +225,19 @@ public class World_1 extends AppCompatActivity {
                         case 0:
                             if (numLeft < 7) {
                                 img_left.setImageResource(R.drawable.imgtrue);
+                                truesd.start();
                             } else {
                                 img_left.setImageResource((R.drawable.imgfalse));
+                                falsesd.start();
                             }
                             break;
                         case 1:
                             if (numLeft > 6) {
                                 img_left.setImageResource(R.drawable.imgtrue);
+                                truesd.start();
                             } else {
                                 img_left.setImageResource(R.drawable.imgfalse);
+                                falsesd.start();
                             }
                             break;
                     }
@@ -357,15 +363,19 @@ public class World_1 extends AppCompatActivity {
                         case 0:
                             if (numRight < 7) {
                                 img_right.setImageResource(R.drawable.imgtrue);
+                                truesd.start();
                             } else {
                                 img_right.setImageResource((R.drawable.imgfalse));
+                                falsesd.start();
                             }
                             break;
                         case 1:
                             if (numRight > 6) {
                                 img_right.setImageResource(R.drawable.imgtrue);
+                                truesd.start();
                             } else {
                                 img_right.setImageResource(R.drawable.imgfalse);
+                                falsesd.start();
                             }
                             break;
                     }

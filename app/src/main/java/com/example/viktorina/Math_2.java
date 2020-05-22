@@ -45,6 +45,8 @@ public class Math_2 extends AppCompatActivity {
     private MediaPlayer heart;
     private MediaPlayer rectangle;
     private MediaPlayer endlvl;
+    private MediaPlayer truesd;
+    private MediaPlayer falsesd;
 
     Array array = new Array();
     Random random = new Random();
@@ -66,6 +68,8 @@ public class Math_2 extends AppCompatActivity {
 
         catSd = MediaPlayer.create(this,R.raw.figuresdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
+        truesd = MediaPlayer.create(this,R.raw.truesd);
+        falsesd = MediaPlayer.create(this,R.raw.falsesd);
 
         //Игра на весь икран - нч
         Window w = getWindow();
@@ -303,8 +307,10 @@ public class Math_2 extends AppCompatActivity {
                     img_4.setEnabled(false);
                     if(numLeftTop == numArr){
                         img_1.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
                     } else {
                         img_1.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -435,8 +441,10 @@ public class Math_2 extends AppCompatActivity {
                     img_4.setEnabled(false);
                     if(numRightTop == numArr){
                         img_2.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
                     } else {
                         img_2.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -567,8 +575,10 @@ public class Math_2 extends AppCompatActivity {
                     img_4.setEnabled(false);
                     if(numLeftBot == numArr){
                         img_3.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
                     } else {
                         img_3.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -701,8 +711,10 @@ public class Math_2 extends AppCompatActivity {
                     img_2.setEnabled(false);
                     if(numRightBot == numArr){
                         img_4.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
                     } else {
                         img_4.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){

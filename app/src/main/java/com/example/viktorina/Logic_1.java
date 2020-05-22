@@ -37,6 +37,8 @@ public class Logic_1 extends AppCompatActivity {
     public int count = 0;
     private MediaPlayer catSd;
     private MediaPlayer endlvl;
+    private MediaPlayer truesd;
+    private MediaPlayer falsesd;
     private ImageView help;
     Array array = new Array();
     Random random = new Random();
@@ -58,6 +60,8 @@ public class Logic_1 extends AppCompatActivity {
 
         catSd = MediaPlayer.create(this,R.raw.logicdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
+        truesd = MediaPlayer.create(this,R.raw.truesd);
+        falsesd = MediaPlayer.create(this,R.raw.falsesd);
         catSd.start();
 
         //Игра на весь икран - нч
@@ -306,8 +310,10 @@ public class Logic_1 extends AppCompatActivity {
                     img_4.setEnabled(false);
                     if(numLeftTop == 3){
                         img_1.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
                     } else {
                         img_1.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -510,8 +516,10 @@ public class Logic_1 extends AppCompatActivity {
                     img_4.setEnabled(false);
                     if(numRightTop == 3){
                         img_2.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
                     } else {
                         img_2.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -714,8 +722,10 @@ public class Logic_1 extends AppCompatActivity {
                     img_4.setEnabled(false);
                     if(numLeftBot == 3){
                         img_3.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
                     } else {
                         img_3.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -918,8 +928,10 @@ public class Logic_1 extends AppCompatActivity {
                     img_3.setEnabled(false);
                     if(numRightBot == 3){
                         img_4.setImageResource(R.drawable.imgtrue);
+                        truesd.start();
                     } else {
                         img_4.setImageResource((R.drawable.imgfalse));
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
