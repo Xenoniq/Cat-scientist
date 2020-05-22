@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.media.MediaPlayer;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class Logic_1 extends AppCompatActivity {
@@ -128,13 +130,21 @@ public class Logic_1 extends AppCompatActivity {
         //Диалоговое окно помощь - нач
         dialogHelp = new Dialog(this);
         dialogHelp.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        Rect displayRectangle = new Rect();
+        Window window = getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+        View layout = getLayoutInflater().inflate(R.layout.dialoghelp, null);
+
         dialogHelp.setContentView(R.layout.dialoghelp);
         dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogHelp
+                .getWindow()
+                .setLayout((int) (displayRectangle.width()), (int) (displayRectangle.height() * 0.5));
         dialogHelp.setCancelable(false);
         final VideoView videoView = (VideoView) dialogHelp.findViewById(R.id.vidHelp);
         Uri logVideoUri= Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.logic);
         videoView.setVideoURI(logVideoUri);
-        videoView.start();
 
         Button but_cont = (Button)dialogHelp.findViewById(R.id.buttoncont);
         but_cont.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +189,7 @@ public class Logic_1 extends AppCompatActivity {
                                        @Override
                                        public void onClick(View v) {
                                            dialogHelp.show();
+                                           videoView.start();
                                        }
                                    }
         );
@@ -309,9 +320,21 @@ public class Logic_1 extends AppCompatActivity {
                     img_3.setEnabled(false);
                     img_4.setEnabled(false);
                     if(numLeftTop == 3){
+                        truesd.stop();
+                        try {
+                            truesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_1.setImageResource(R.drawable.imgtrue);
                         truesd.start();
                     } else {
+                        falsesd.stop();
+                        try {
+                            falsesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_1.setImageResource((R.drawable.imgfalse));
                         falsesd.start();
                     }
@@ -515,9 +538,21 @@ public class Logic_1 extends AppCompatActivity {
                     img_3.setEnabled(false);
                     img_4.setEnabled(false);
                     if(numRightTop == 3){
+                        truesd.stop();
+                        try {
+                            truesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_2.setImageResource(R.drawable.imgtrue);
                         truesd.start();
                     } else {
+                        falsesd.stop();
+                        try {
+                            falsesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_2.setImageResource((R.drawable.imgfalse));
                         falsesd.start();
                     }
@@ -721,9 +756,21 @@ public class Logic_1 extends AppCompatActivity {
                     img_2.setEnabled(false);
                     img_4.setEnabled(false);
                     if(numLeftBot == 3){
+                        truesd.stop();
+                        try {
+                            truesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_3.setImageResource(R.drawable.imgtrue);
                         truesd.start();
                     } else {
+                        falsesd.stop();
+                        try {
+                            falsesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_3.setImageResource((R.drawable.imgfalse));
                         falsesd.start();
                     }
@@ -927,9 +974,21 @@ public class Logic_1 extends AppCompatActivity {
                     img_2.setEnabled(false);
                     img_3.setEnabled(false);
                     if(numRightBot == 3){
+                        truesd.stop();
+                        try {
+                            truesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_4.setImageResource(R.drawable.imgtrue);
                         truesd.start();
                     } else {
+                        falsesd.stop();
+                        try {
+                            falsesd.prepare();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         img_4.setImageResource((R.drawable.imgfalse));
                         falsesd.start();
                     }
