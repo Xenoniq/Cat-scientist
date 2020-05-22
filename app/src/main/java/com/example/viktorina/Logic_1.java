@@ -58,7 +58,7 @@ public class Logic_1 extends AppCompatActivity {
 
         catSd = MediaPlayer.create(this,R.raw.logicdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
-        soundPlay(catSd);
+        catSd.start();
 
         //Игра на весь икран - нч
         Window w = getWindow();
@@ -97,7 +97,7 @@ public class Logic_1 extends AppCompatActivity {
         btnclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent( Logic_1.this, Logic.class);
                     startActivity(intent);finish();
@@ -113,7 +113,7 @@ public class Logic_1 extends AppCompatActivity {
         btncontinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 dialog.dismiss();
             }
         });
@@ -164,7 +164,7 @@ public class Logic_1 extends AppCompatActivity {
                 }catch (Exception e){
 
                 }
-                soundStop(endlvl);
+                endlvl.stop();
                 dialogEnd.dismiss();
             }
         });
@@ -344,7 +344,7 @@ public class Logic_1 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -548,7 +548,7 @@ public class Logic_1 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -752,7 +752,7 @@ public class Logic_1 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -956,7 +956,7 @@ public class Logic_1 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -1121,7 +1121,7 @@ public class Logic_1 extends AppCompatActivity {
     //Системная кнопка назад - начало
     @Override
     public void onBackPressed() {
-        soundStop(catSd);
+        catSd.stop();
         try {
             Intent intent = new Intent(Logic_1.this, Logic.class);
             startActivity(intent);
@@ -1131,10 +1131,5 @@ public class Logic_1 extends AppCompatActivity {
         }
     }
     //Сиситемная кнопка назад - конец
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
+
 }

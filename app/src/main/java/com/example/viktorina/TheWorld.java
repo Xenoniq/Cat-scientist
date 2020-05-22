@@ -25,13 +25,13 @@ public class TheWorld extends AppCompatActivity {
         cat = (ImageView)findViewById(R.id.cat);
         catSd = MediaPlayer.create(this,R.raw.animallvl);
         imClick();
-        soundPlay(catSd);
+        catSd.start();
 
         Button button_back = (Button) findViewById(R.id.button_backtoctg);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(TheWorld.this, Categories.class);
                     startActivity(intent);
@@ -46,7 +46,7 @@ public class TheWorld extends AppCompatActivity {
         lvl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(TheWorld.this, World_1.class);
                     startActivity(intent);finish();
@@ -63,7 +63,7 @@ public class TheWorld extends AppCompatActivity {
     //Системная кнопка назад - начало
     @Override
     public void onBackPressed() {
-        soundStop(catSd);
+        catSd.stop();
         try {
             Intent intent = new Intent(TheWorld.this, Categories.class);
             startActivity(intent);
@@ -79,16 +79,11 @@ public class TheWorld extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        soundPlay(catSd);
+                        catSd.start();
                     }
                 }
         );
 
     }
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
+
 }

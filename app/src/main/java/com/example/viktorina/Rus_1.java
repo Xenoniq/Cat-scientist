@@ -54,7 +54,7 @@ public class Rus_1 extends AppCompatActivity {
         //Скругление углов
         catSd = MediaPlayer.create(this,R.raw.lettersdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
-        soundPlay(catSd);
+        catSd.start();
 
         //Игра на весь икран - нч
         Window w = getWindow();
@@ -77,7 +77,7 @@ public class Rus_1 extends AppCompatActivity {
         btnclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Rus_1.this, Russian.class);
                     startActivity(intent);finish();
@@ -94,13 +94,13 @@ public class Rus_1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                soundStop(catSd);
+                catSd.stop();
                 switch (numTask){
                     case 0:
-                        soundPlay(vowel);
+                        vowel.start();
                         break;
                     case 1:
-                        soundPlay(consonant);
+                        consonant.start();
                         break;
                 }
             }
@@ -160,7 +160,7 @@ public class Rus_1 extends AppCompatActivity {
                 }catch (Exception e){
 
                 }
-                soundStop(endlvl);
+                endlvl.stop();
                 dialogEnd.dismiss();
             }
         });
@@ -210,10 +210,10 @@ public class Rus_1 extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     switch (numTask){
                         case 0:
-                            soundStop(vowel);
+                            vowel.stop();
                             break;
                         case 1:
-                            soundStop(consonant);
+                           consonant.stop();
                             break;
                     }
                     img_right.setEnabled(false);
@@ -303,7 +303,7 @@ public class Rus_1 extends AppCompatActivity {
                             break;
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                       endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -321,10 +321,10 @@ public class Rus_1 extends AppCompatActivity {
                     task.setText(array.textLetters[numTask]);
                     switch (numTask){
                         case 0:
-                            soundPlay(vowel);
+                            vowel.start();
                             break;
                         case 1:
-                            soundPlay(consonant);
+                            consonant.start();
                             break;
                     }
                 }
@@ -342,10 +342,10 @@ public class Rus_1 extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     switch (numTask){
                         case 0:
-                            soundStop(vowel);
+                            vowel.stop();
                             break;
                         case 1:
-                            soundStop(consonant);
+                            consonant.stop();
                             break;
                     }
                     img_left.setEnabled(false);
@@ -435,7 +435,7 @@ public class Rus_1 extends AppCompatActivity {
                             break;
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -453,10 +453,10 @@ public class Rus_1 extends AppCompatActivity {
                     task.setText(array.textLetters[numTask]);
                     switch (numTask){
                         case 0:
-                            soundPlay(vowel);
+                            vowel.start();
                             break;
                         case 1:
-                            soundPlay(consonant);
+                            consonant.start();
                             break;
                     }
                 }
@@ -468,10 +468,5 @@ public class Rus_1 extends AppCompatActivity {
 
     }
 
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
+
 }

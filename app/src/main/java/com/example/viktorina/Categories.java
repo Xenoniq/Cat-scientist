@@ -28,7 +28,7 @@ public class Categories extends AppCompatActivity {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Categories.this, MainActivity.class);
                     startActivity(intent);
@@ -41,13 +41,13 @@ public class Categories extends AppCompatActivity {
         cat = (ImageView)findViewById(R.id.cat);
         catSd = MediaPlayer.create(this,R.raw.category);
         imClick();
-        soundPlay(catSd);
+        catSd.start();
         //Переход в категорию математика - нч
         TextView lvl1 = (TextView)findViewById(R.id.ctg_1);
         lvl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Categories.this, Math.class);
                     startActivity(intent);finish();
@@ -64,7 +64,7 @@ public class Categories extends AppCompatActivity {
         lvl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Categories.this, Russian.class);
                     startActivity(intent);finish();
@@ -81,7 +81,7 @@ public class Categories extends AppCompatActivity {
         lvl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Categories.this, Logic.class);
                     startActivity(intent);finish();
@@ -98,7 +98,7 @@ public class Categories extends AppCompatActivity {
         lvl4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Categories.this, TheWorld.class);
                     startActivity(intent);finish();
@@ -116,7 +116,7 @@ public class Categories extends AppCompatActivity {
     //Системная кнопка назад - начало
     @Override
     public void onBackPressed() {
-        soundStop(catSd);
+        catSd.stop();
         try {
             Intent intent = new Intent(Categories.this, MainActivity.class);
             startActivity(intent);
@@ -132,16 +132,11 @@ public class Categories extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        soundPlay(catSd);
+                        catSd.start();
                     }
                 }
         );
 
     }
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
+
 }

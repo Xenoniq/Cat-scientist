@@ -55,7 +55,7 @@ public class World_1 extends AppCompatActivity {
 
         catSd = MediaPlayer.create(this,R.raw.animalsdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
-        soundPlay(catSd);
+        catSd.start();
 
         //Игра на весь икран - нч
         Window w = getWindow();
@@ -76,7 +76,7 @@ public class World_1 extends AppCompatActivity {
         btnclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(World_1.this, TheWorld.class);
                     startActivity(intent);finish();
@@ -93,13 +93,13 @@ public class World_1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                soundStop(catSd);
+                catSd.stop();
                 switch (numTask){
                     case 0:
-                        soundPlay(pet);
+                        pet.start();
                         break;
                     case 1:
-                        soundPlay(wild);
+                        wild.start();
                         break;
                 }
 
@@ -161,7 +161,7 @@ public class World_1 extends AppCompatActivity {
 
                 }
                 dialogEnd.dismiss();
-                soundStop(endlvl);
+                endlvl.stop();
             }
         });
         //Диалоговое окно в конце уровня - кц
@@ -212,10 +212,10 @@ public class World_1 extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     switch (numTask){
                         case 0:
-                            soundStop(pet);
+                            pet.stop();
                             break;
                         case 1:
-                            soundStop(wild);
+                            wild.stop();
                             break;
                     }
                     img_right.setEnabled(false);
@@ -306,7 +306,7 @@ public class World_1 extends AppCompatActivity {
                     }
                     if(count==20){
                         dialogEnd.show();
-                        soundPlay(endlvl);
+                        endlvl.start();
                     }
                     else {
                         numLeft = random.nextInt(14);
@@ -323,10 +323,10 @@ public class World_1 extends AppCompatActivity {
                     task.setText(array.textAnimals[numTask]);
                     switch (numTask){
                         case 0:
-                            soundPlay(pet);
+                            pet.start();
                             break;
                         case 1:
-                            soundPlay(wild);
+                            wild.start();
                             break;
                     }
 
@@ -346,10 +346,10 @@ public class World_1 extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     switch (numTask){
                         case 0:
-                            soundStop(pet);
+                            pet.stop();
                             break;
                         case 1:
-                            soundStop(wild);
+                            wild.stop();
                             break;
                     }
                     img_left.setEnabled(false);
@@ -440,7 +440,7 @@ public class World_1 extends AppCompatActivity {
                     }
                     if(count==20){
                         dialogEnd.show();
-                        soundPlay(endlvl);
+                        endlvl.start();
                     }
                     else {
                         numLeft = random.nextInt(14);
@@ -457,10 +457,10 @@ public class World_1 extends AppCompatActivity {
                     task.setText(array.textAnimals[numTask]);
                     switch (numTask){
                         case 0:
-                            soundPlay(pet);
+                            pet.start();
                             break;
                         case 1:
-                            soundPlay(wild);
+                            wild.start();
                             break;
                     }
                 }
@@ -471,10 +471,5 @@ public class World_1 extends AppCompatActivity {
         //Нажатие на правую картинку кц
 
     }
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
+
 }

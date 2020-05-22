@@ -55,7 +55,7 @@ public class Rus_2 extends AppCompatActivity {
 
         catSd = MediaPlayer.create(this,R.raw.soundsdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
-        soundPlay(catSd);
+        catSd.start();
 
         //Игра на весь икран - нч
         Window w = getWindow();
@@ -78,7 +78,7 @@ public class Rus_2 extends AppCompatActivity {
         btnclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Rus_2.this, Russian.class);
                     startActivity(intent);finish();
@@ -94,14 +94,14 @@ public class Rus_2 extends AppCompatActivity {
         btncontinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 dialog.dismiss();
                 switch (numTask){
                     case 0:
-                        soundPlay(sonorous);
+                        sonorous.start();
                         break;
                     case 1:
-                        soundPlay(muffled);
+                        muffled.start();
                         break;
                 }
             }
@@ -162,7 +162,7 @@ public class Rus_2 extends AppCompatActivity {
 
                 }
                 dialogEnd.dismiss();
-                soundStop(endlvl);
+                endlvl.stop();
             }
         });
         //Диалоговое окно в конце уровня - кц
@@ -212,10 +212,10 @@ public class Rus_2 extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     switch (numTask){
                         case 0:
-                            soundStop(sonorous);
+                            sonorous.stop();
                             break;
                         case 1:
-                            soundStop(muffled);
+                            muffled.stop();
                             break;
                     }
                     img_right.setEnabled(false);
@@ -305,7 +305,7 @@ public class Rus_2 extends AppCompatActivity {
                             break;
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -323,12 +323,10 @@ public class Rus_2 extends AppCompatActivity {
                     task.setText(array.textSounds[numTask]);
                     switch (numTask){
                         case 0:
-                            sonorous.reset();
-                            soundPlay(sonorous);
+                            sonorous.start();
                             break;
                         case 1:
-                            sonorous.reset();
-                            soundPlay(muffled);
+                            muffled.start();
                             break;
                     }
 
@@ -347,10 +345,10 @@ public class Rus_2 extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     switch (numTask){
                         case 0:
-                            soundStop(sonorous);
+                            sonorous.stop();
                             break;
                         case 1:
-                            soundStop(muffled);
+                            muffled.stop();
                             break;
                     }
                     img_left.setEnabled(false);
@@ -441,7 +439,7 @@ public class Rus_2 extends AppCompatActivity {
                     }
                     if(count==20){
                         dialogEnd.show();
-                        soundPlay(endlvl);
+                        endlvl.start();
                     }
                     else {
                         numLeft = random.nextInt(21);
@@ -458,10 +456,10 @@ public class Rus_2 extends AppCompatActivity {
                     task.setText(array.textSounds[numTask]);
                     switch (numTask){
                         case 0:
-                            soundPlay(sonorous);
+                            sonorous.start();
                             break;
                         case 1:
-                            soundPlay(muffled);
+                            muffled.start();
                             break;
                     }
                 }
@@ -472,11 +470,6 @@ public class Rus_2 extends AppCompatActivity {
         //Нажатие на правую картинку кц
 
     }
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
+
 }
 

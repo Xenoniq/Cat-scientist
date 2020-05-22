@@ -26,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
         cat = (ImageView)findViewById(R.id.cat);
         hello = MediaPlayer.create(this,R.raw.hello);
         imClick();
-        soundPlay(hello);
+        hello.start();
         Button buttStart = (Button)findViewById(R.id.buttonStart);
         buttStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(hello);
+                hello.stop();
                 try {
                     Intent intent = new Intent(MainActivity.this, Categories.class);
                     startActivity(intent);finish();
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        soundPlay(hello);
+                        hello.start();
                     }
                 }
         );
@@ -57,10 +57,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
+
 }

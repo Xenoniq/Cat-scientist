@@ -79,22 +79,22 @@ public class Math_2 extends AppCompatActivity {
             public void onClick(View v) {
                 switch (numArr){
                     case 0:
-                        soundStop(cirlce);
+                        cirlce.stop();
                         break;
                     case 1:
-                        soundStop(square);
+                        square.stop();
                         break;
                     case 2:
-                        soundStop(star);
+                        star.stop();
                         break;
                     case 3:
-                        soundStop(triangle);
+                        triangle.stop();
                         break;
                     case 4:
-                        soundStop(heart);
+                        heart.stop();
                         break;
                     case 5:
-                        soundStop(rectangle);
+                        rectangle.stop();
                         break;
                 }
                 try {
@@ -112,7 +112,7 @@ public class Math_2 extends AppCompatActivity {
         dialog.setContentView(R.layout.previewdialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
-        soundPlay(catSd);
+        catSd.start();
         TextView descp = (TextView) dialog.findViewById(R.id.textdescr);
         descp.setText(R.string.math_lvl_2);
         //Картинка в окне - нач
@@ -126,7 +126,7 @@ public class Math_2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    soundStop(catSd);
+                    catSd.stop();
                     Intent intent = new Intent( Math_2.this, Math.class);
                     startActivity(intent);finish();
                 }catch (Exception e){
@@ -141,26 +141,26 @@ public class Math_2 extends AppCompatActivity {
         btncontinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 dialog.dismiss();
                 switch (numArr){
                     case 0:
-                        soundPlay(cirlce);
+                        cirlce.start();
                         break;
                     case 1:
-                        soundPlay(square);
+                        square.start();
                         break;
                     case 2:
-                        soundPlay(star);
+                        star.start();
                         break;
                     case 3:
-                        soundPlay(triangle);
+                        triangle.start();
                         break;
                     case 4:
-                        soundPlay(heart);
+                        heart.start();
                         break;
                     case 5:
-                        soundPlay(rectangle);
+                        rectangle.start();
                         break;
                 }
             }
@@ -212,7 +212,7 @@ public class Math_2 extends AppCompatActivity {
                 }catch (Exception e){
 
                 }
-                soundStop(endlvl);
+                endlvl.stop();
                 dialogEnd.dismiss();
             }
         });
@@ -280,22 +280,22 @@ public class Math_2 extends AppCompatActivity {
                 if(event.getAction()== MotionEvent.ACTION_DOWN){
                     switch (numArr){
                         case 0:
-                            soundStop(cirlce);
+                            cirlce.stop();
                             break;
                         case 1:
-                            soundStop(square);
+                            square.stop();
                             break;
                         case 2:
-                            soundStop(star);
+                            star.stop();
                             break;
                         case 3:
-                            soundStop(triangle);
+                            triangle.stop();
                             break;
                         case 4:
-                            soundStop(heart);
+                            heart.stop();
                             break;
                         case 5:
-                            soundStop(rectangle);
+                            rectangle.stop();
                             break;
                     }
                     img_2.setEnabled(false);
@@ -341,7 +341,7 @@ public class Math_2 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                       endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -378,22 +378,22 @@ public class Math_2 extends AppCompatActivity {
                                 task.setText(array.textFigures[numArr]);
                         switch (numArr){
                             case 0:
-                                soundPlay(cirlce);
+                                cirlce.start();
                                 break;
                             case 1:
-                                soundPlay(square);
+                                square.start();
                                 break;
                             case 2:
-                                soundPlay(star);
+                                star.start();
                                 break;
                             case 3:
-                                soundPlay(triangle);
+                                triangle.start();
                                 break;
                             case 4:
-                                soundPlay(heart);
+                                heart.start();
                                 break;
                             case 5:
-                                soundPlay(rectangle);
+                                rectangle.start();
                                 break;
                         }
 
@@ -412,22 +412,22 @@ public class Math_2 extends AppCompatActivity {
                 if(event.getAction()== MotionEvent.ACTION_DOWN){
                     switch (numArr){
                         case 0:
-                            soundStop(cirlce);
+                            cirlce.stop();
                             break;
                         case 1:
-                            soundStop(square);
+                            square.stop();
                             break;
                         case 2:
-                            soundStop(star);
+                            star.stop();
                             break;
                         case 3:
-                            soundStop(triangle);
+                            triangle.stop();
                             break;
                         case 4:
-                            soundStop(heart);
+                            heart.stop();
                             break;
                         case 5:
-                            soundStop(rectangle);
+                            rectangle.stop();
                             break;
                     }
                     img_1.setEnabled(false);
@@ -473,7 +473,7 @@ public class Math_2 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -508,26 +508,28 @@ public class Math_2 extends AppCompatActivity {
                         }
                         numArr = numTask;
                         task.setText(array.textFigures[numArr]);
+
                         switch (numArr){
                             case 0:
-                                soundPlay(cirlce);
+                                cirlce.start();
                                 break;
                             case 1:
-                                soundPlay(square);
+                                square.start();
                                 break;
                             case 2:
-                                soundPlay(star);
+                                star.start();
                                 break;
                             case 3:
-                                soundPlay(triangle);
+                                triangle.start();
                                 break;
                             case 4:
-                                soundPlay(heart);
+                                heart.start();
                                 break;
                             case 5:
-                                soundPlay(rectangle);
+                                rectangle.start();
                                 break;
                         }
+
                     }
                 }
                 return true;
@@ -542,24 +544,24 @@ public class Math_2 extends AppCompatActivity {
                 if(event.getAction()== MotionEvent.ACTION_DOWN){
                     switch (numArr){
                         case 0:
-                            soundStop(cirlce);
+                            cirlce.stop();
                             break;
                         case 1:
-                            soundStop(square);
+                            square.stop();
                             break;
                         case 2:
-                            soundStop(star);
+                            star.stop();
                             break;
                         case 3:
-                            soundStop(triangle);
+                            triangle.stop();
                             break;
                         case 4:
-                            soundStop(heart);
+                            heart.stop();
                             break;
                         case 5:
-                            soundStop(rectangle);
+                            rectangle.stop();
                             break;
-                }
+                    }
                     img_1.setEnabled(false);
                     img_2.setEnabled(false);
                     img_4.setEnabled(false);
@@ -603,7 +605,7 @@ public class Math_2 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -638,46 +640,29 @@ public class Math_2 extends AppCompatActivity {
                         }
                         numArr = numTask;
                         task.setText(array.textFigures[numArr]);
+
                         switch (numArr){
                             case 0:
-                                soundPlay(cirlce);
+                                cirlce.start();
                                 break;
                             case 1:
-                                soundPlay(square);
+                                square.start();
                                 break;
                             case 2:
-                                soundPlay(star);
+                                star.start();
                                 break;
                             case 3:
-                                soundPlay(triangle);
+                                triangle.start();
                                 break;
                             case 4:
-                                soundPlay(heart);
+                                heart.start();
                                 break;
                             case 5:
-                                soundPlay(rectangle);
+                                rectangle.start();
                                 break;
                         }
-                        switch (numArr){
-                            case 0:
-                                soundStop(cirlce);
-                                break;
-                            case 1:
-                                soundStop(square);
-                                break;
-                            case 2:
-                                soundStop(star);
-                                break;
-                            case 3:
-                                soundStop(triangle);
-                                break;
-                            case 4:
-                                soundStop(heart);
-                                break;
-                            case 5:
-                                soundStop(rectangle);
-                                break;
-                        }
+
+
                     }
                 }
                 return true;
@@ -693,22 +678,22 @@ public class Math_2 extends AppCompatActivity {
                 if(event.getAction()== MotionEvent.ACTION_DOWN){
                     switch (numArr){
                         case 0:
-                            soundStop(cirlce);
+                            cirlce.stop();
                             break;
                         case 1:
-                            soundStop(square);
+                            square.stop();
                             break;
                         case 2:
-                            soundStop(star);
+                            star.stop();
                             break;
                         case 3:
-                            soundStop(triangle);
+                            triangle.stop();
                             break;
                         case 4:
-                            soundStop(heart);
+                            heart.stop();
                             break;
                         case 5:
-                            soundStop(rectangle);
+                            rectangle.stop();
                             break;
                     }
                     img_1.setEnabled(false);
@@ -754,7 +739,7 @@ public class Math_2 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -790,22 +775,22 @@ public class Math_2 extends AppCompatActivity {
                         task.setText(array.textFigures[numArr]);
                         switch (numArr){
                             case 0:
-                                soundPlay(cirlce);
+                                cirlce.start();
                                 break;
                             case 1:
-                                soundPlay(square);
+                                square.start();
                                 break;
                             case 2:
-                                soundPlay(star);
+                                star.start();
                                 break;
                             case 3:
-                                soundPlay(triangle);
+                               triangle.start();
                                 break;
                             case 4:
-                                soundPlay(heart);
+                                heart.start();
                                 break;
                             case 5:
-                                soundPlay(rectangle);
+                                rectangle.start();
                                 break;
                         }
                     }
@@ -817,13 +802,7 @@ public class Math_2 extends AppCompatActivity {
 
 
     }
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
 
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
 
     private void releaseMp(MediaPlayer sd) {
         if (sd != null) {

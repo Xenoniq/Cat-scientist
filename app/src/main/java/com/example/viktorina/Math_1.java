@@ -68,7 +68,7 @@ public class Math_1 extends AppCompatActivity {
         dialog.setContentView(R.layout.previewdialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
-        soundPlay(catSd);
+        catSd.start();
         //Кнопка закрытия окна - нч
         TextView btnclose =(TextView)dialog.findViewById(R.id.button_close);
         btnclose.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class Math_1 extends AppCompatActivity {
 
                 }
                 dialog.dismiss();
-                soundStop(catSd);
+                catSd.stop();
             }
         });
         //Кнопка закрытия окна - кц
@@ -90,7 +90,7 @@ public class Math_1 extends AppCompatActivity {
         btncontinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 dialog.dismiss();
             }
         });
@@ -149,7 +149,7 @@ public class Math_1 extends AppCompatActivity {
                 }catch (Exception e){
 
                 }
-                soundStop(endlvl);
+                endlvl.stop();
                 dialogEnd.dismiss();
             }
         });
@@ -194,11 +194,11 @@ public class Math_1 extends AppCompatActivity {
                     img_right.setEnabled(false);
                         if(numLeft>numRight){
                         img_left.setImageResource(R.drawable.imgtrue);
-                        soundPlay(truesd);
+                        truesd.start();
                     }
                         else {
                             img_left.setImageResource((R.drawable.imgfalse));
-                            soundPlay(falsesd);
+                            falsesd.start();
                     }
                 }
                     else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -235,7 +235,7 @@ public class Math_1 extends AppCompatActivity {
 
                         }
                         if(count==20){
-                            soundPlay(endlvl);
+                            endlvl.start();
                             dialogEnd.show();
                         }else {
                             numLeft = random.nextInt(10);
@@ -265,10 +265,10 @@ public class Math_1 extends AppCompatActivity {
                     img_left.setEnabled(false);
                     if(numLeft<numRight){
                         img_right.setImageResource(R.drawable.imgtrue);
-                        soundPlay(truesd);
+                        truesd.start();
                     } else {
                         img_right.setImageResource((R.drawable.imgfalse));
-                        soundPlay(falsesd);
+                        falsesd.start();
                     }
                 }
                 else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -304,7 +304,7 @@ public class Math_1 extends AppCompatActivity {
 
                     }
                     if(count==20){
-                        soundPlay(endlvl);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -341,11 +341,5 @@ public class Math_1 extends AppCompatActivity {
     }
     //Сиситемная кнопка назад - конец
 
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
 
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
 }

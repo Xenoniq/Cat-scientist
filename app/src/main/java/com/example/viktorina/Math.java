@@ -28,13 +28,13 @@ public class Math extends AppCompatActivity {
         cat = (ImageView)findViewById(R.id.cat);
         catSd = MediaPlayer.create(this,R.raw.mathlvl);
         imClick();
-        soundPlay(catSd);
+        catSd.start();
 
         Button button_back = (Button) findViewById(R.id.button_backtoctg);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Math.this, Categories.class);
                     startActivity(intent);
@@ -49,7 +49,7 @@ public class Math extends AppCompatActivity {
         lvl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Math.this, Math_1.class);
                     startActivity(intent);finish();
@@ -67,7 +67,7 @@ public class Math extends AppCompatActivity {
         lvl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundStop(catSd);
+                catSd.stop();
                 try {
                     Intent intent = new Intent(Math.this, Math_2.class);
                     startActivity(intent);finish();
@@ -84,7 +84,7 @@ public class Math extends AppCompatActivity {
     //Системная кнопка назад - начало
     @Override
     public void onBackPressed() {
-        soundStop(catSd);
+        catSd.stop();
         try {
             Intent intent = new Intent(Math.this, Categories.class);
             startActivity(intent);
@@ -100,16 +100,11 @@ public class Math extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        soundPlay(catSd);
+                        catSd.start();
                     }
                 }
         );
 
     }
-    public void soundPlay(MediaPlayer sd){
-        sd.start();
-    }
-    public void soundStop(MediaPlayer sd){
-        sd.stop();
-    }
+
 }
