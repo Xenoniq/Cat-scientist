@@ -12,6 +12,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 
 public class Math_1 extends AppCompatActivity {
@@ -40,7 +43,7 @@ public class Math_1 extends AppCompatActivity {
     private MediaPlayer endlvl;
     private MediaPlayer truesd;
     private MediaPlayer falsesd;
-
+    Stopwatch stopwatch;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -95,6 +98,8 @@ public class Math_1 extends AppCompatActivity {
             public void onClick(View v) {
                 catSd.stop();
                 dialog.dismiss();
+                stopwatch = new Stopwatch(Math_1.this);
+                stopwatch.startChronometer();
             }
         });
         //Продолжить - кц
@@ -201,6 +206,8 @@ public class Math_1 extends AppCompatActivity {
         while (numLeft == numRight) {
             numRight = random.nextInt(10);
         }
+
+
         //Цикл проверяющий равенство чисел справа и слева - кц
         img_right.setImageResource(array.images1[numRight]);
         //Нажатие на левую картинку нч
@@ -263,6 +270,9 @@ public class Math_1 extends AppCompatActivity {
                     }
                     if (count == 20) {
                         endlvl.start();
+                        stopwatch.pauseChronometer();
+                        TextView time = (TextView) dialogEnd.findViewById(R.id.time);
+                        time.setText(stopwatch.getStringTime());
                         dialogEnd.show();
                     } else {
                         numLeft = random.nextInt(10);
@@ -342,6 +352,9 @@ public class Math_1 extends AppCompatActivity {
                     }
                     if (count == 20) {
                         endlvl.start();
+                        stopwatch.pauseChronometer();
+                        TextView time = (TextView) dialogEnd.findViewById(R.id.time);
+                        time.setText(stopwatch.getStringTime());
                         dialogEnd.show();
                     } else {
                         numLeft = random.nextInt(10);
