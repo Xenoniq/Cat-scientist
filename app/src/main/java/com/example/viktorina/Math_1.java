@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -103,13 +104,23 @@ public class Math_1 extends AppCompatActivity {
         //Диалоговое окно помощь - нач
         dialogHelp = new Dialog(this);
         dialogHelp.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogHelp.setContentView(R.layout.dialoghelp);
+
+        Rect displayRectangle = new Rect();
+        Window window = getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+        View layout = getLayoutInflater().inflate(R.layout.dialoghelp, null);
+
+
+        dialogHelp.setContentView(layout);
         dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogHelp
+                .getWindow()
+                .setLayout((int) (displayRectangle.width()), (int) (displayRectangle.height() * 0.5));
         dialogHelp.setCancelable(false);
         final VideoView videoView = (VideoView) dialogHelp.findViewById(R.id.vidHelp);
         Uri numVideoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.nums);
         videoView.setVideoURI(numVideoUri);
-        videoView.start();
+
 
         Button but_cont = (Button) dialogHelp.findViewById(R.id.buttoncont);
         but_cont.setOnClickListener(new View.OnClickListener() {
@@ -126,12 +137,14 @@ public class Math_1 extends AppCompatActivity {
         //Диалоговое окно помощь - кц
         //Кнопка помощь - нач
         help = (ImageView) findViewById(R.id.help);
-        help.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        dialogHelp.show();
-                                    }
-                                }
+        help.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        videoView.start();
+                        dialogHelp.show();
+                    }
+                }
         );
         //нопка помощь - кц
         //Диалоговое окно в конце уровня - нач
