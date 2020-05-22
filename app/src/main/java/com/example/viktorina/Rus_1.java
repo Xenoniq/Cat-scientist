@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class Rus_1 extends AppCompatActivity {
@@ -116,8 +118,17 @@ public class Rus_1 extends AppCompatActivity {
         //Диалоговое окно помощь - нач
         dialogHelp = new Dialog(this);
         dialogHelp.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        Rect displayRectangle = new Rect();
+        Window window = getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+        View layout = getLayoutInflater().inflate(R.layout.dialoghelp, null);
+
         dialogHelp.setContentView(R.layout.dialoghelp);
         dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogHelp
+                .getWindow()
+                .setLayout((int) (displayRectangle.width()), (int) (displayRectangle.height() * 0.5));
         dialogHelp.setCancelable(false);
         final VideoView videoView = (VideoView) dialogHelp.findViewById(R.id.vidHelp);
         Uri numVideoUri= Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.letters);
@@ -215,27 +226,61 @@ public class Rus_1 extends AppCompatActivity {
                     switch (numTask){
                         case 0:
                             vowel.stop();
+                            try {
+                                vowel.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 1:
                            consonant.stop();
+                           try {
+                                consonant.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                     }
                     img_right.setEnabled(false);
                     switch (numTask) {
                         case 0:
                             if (numLeft < 10) {
+                                truesd.stop();
+                                try {
+                                    truesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_left.setImageResource(R.drawable.imgtrue);
                                 truesd.start();
                             } else {
+                                falsesd.stop();
+                                try {
+                                    falsesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_left.setImageResource((R.drawable.imgfalse));
                                 falsesd.start();
                             }
                             break;
                         case 1:
                             if (numLeft > 9) {
+                                truesd.stop();
+                                try {
+                                    truesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_left.setImageResource(R.drawable.imgtrue);
                                 truesd.start();
                             } else {
+                                falsesd.stop();
+                                try {
+                                    falsesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_left.setImageResource(R.drawable.imgfalse);
                                 falsesd.start();
                             }
@@ -351,27 +396,61 @@ public class Rus_1 extends AppCompatActivity {
                     switch (numTask){
                         case 0:
                             vowel.stop();
+                            try {
+                                vowel.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 1:
                             consonant.stop();
+                            try {
+                                consonant.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                     }
                     img_left.setEnabled(false);
                     switch (numTask) {
                         case 0:
                             if (numRight < 10) {
+                                truesd.stop();
+                                try {
+                                    truesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_right.setImageResource(R.drawable.imgtrue);
                                 truesd.start();
                             } else {
+                                falsesd.stop();
+                                try {
+                                    falsesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_right.setImageResource((R.drawable.imgfalse));
                                 falsesd.start();
                             }
                             break;
                         case 1:
                             if (numRight > 9) {
+                                truesd.stop();
+                                try {
+                                    truesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_right.setImageResource(R.drawable.imgtrue);
                                 truesd.start();
                             } else {
+                                falsesd.stop();
+                                try {
+                                    falsesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_right.setImageResource(R.drawable.imgfalse);
                                 falsesd.start();
                             }

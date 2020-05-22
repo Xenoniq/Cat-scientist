@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class Rus_2 extends AppCompatActivity {
@@ -117,13 +119,22 @@ public class Rus_2 extends AppCompatActivity {
         //Диалоговое окно помощь - нач
         dialogHelp = new Dialog(this);
         dialogHelp.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        Rect displayRectangle = new Rect();
+        Window window = getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+        View layout = getLayoutInflater().inflate(R.layout.dialoghelp, null);
+
         dialogHelp.setContentView(R.layout.dialoghelp);
         dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogHelp
+                .getWindow()
+                .setLayout((int) (displayRectangle.width()), (int) (displayRectangle.height() * 0.5));
         dialogHelp.setCancelable(false);
         final VideoView videoView = (VideoView) dialogHelp.findViewById(R.id.vidHelp);
         Uri numVideoUri= Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.soundsvid);
         videoView.setVideoURI(numVideoUri);
-        videoView.start();
+
 
         Button but_cont = (Button)dialogHelp.findViewById(R.id.buttoncont);
         but_cont.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +155,7 @@ public class Rus_2 extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         dialogHelp.show();
+                                        videoView.start();
                                     }
                                 }
         );
@@ -226,18 +238,42 @@ public class Rus_2 extends AppCompatActivity {
                     switch (numTask) {
                         case 0:
                             if (numLeft < 11) {
+                                truesd.stop();
+                                try {
+                                    truesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_left.setImageResource(R.drawable.imgtrue);
                                 truesd.start();
                             } else {
+                                falsesd.stop();
+                                try {
+                                    falsesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_left.setImageResource((R.drawable.imgfalse));
                                 falsesd.start();
                             }
                             break;
                         case 1:
                             if (numLeft > 10) {
+                                truesd.stop();
+                                try {
+                                    truesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_left.setImageResource(R.drawable.imgtrue);
                                 truesd.start();
                             } else {
+                                falsesd.stop();
+                                try {
+                                    falsesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_left.setImageResource(R.drawable.imgfalse);
                                 falsesd.start();
                             }
@@ -363,18 +399,42 @@ public class Rus_2 extends AppCompatActivity {
                     switch (numTask) {
                         case 0:
                             if (numRight < 11) {
+                                truesd.stop();
+                                try {
+                                    truesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_right.setImageResource(R.drawable.imgtrue);
                                 truesd.start();
                             } else {
+                                falsesd.stop();
+                                try {
+                                    falsesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_right.setImageResource((R.drawable.imgfalse));
                                 falsesd.start();
                             }
                             break;
                         case 1:
                             if (numRight > 10) {
+                                truesd.stop();
+                                try {
+                                    truesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_right.setImageResource(R.drawable.imgtrue);
                                 truesd.start();
                             } else {
+                                falsesd.stop();
+                                try {
+                                    falsesd.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 img_right.setImageResource(R.drawable.imgfalse);
                                 falsesd.start();
                             }
