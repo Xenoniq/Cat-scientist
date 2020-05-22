@@ -7,13 +7,14 @@
     tools:context=".MainActivity">
 
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/main_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/main_backgraund_gif">
-    </pl.droidsonroids.gif.GifImageView>
+        android:src="@drawable/main_backgraund">
+
+    </ImageView>
 
     <LinearLayout
         android:layout_width="wrap_content"
