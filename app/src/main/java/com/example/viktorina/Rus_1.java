@@ -4,7 +4,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -43,6 +46,15 @@ public class Rus_1 extends AppCompatActivity {
     Array array = new Array();
     Random random = new Random();
     private ImageView help;
+    public static int lvl = 3;
+    private Stopwatch stopwatch;
+    public static String time;
+    static DBHelper dbHelper;
+    public TextView bestTime;
+    public static SQLiteDatabase database;
+    public String userName;
+    public static int userId;
+    public static String bestScore;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     @Override
@@ -50,12 +62,33 @@ public class Rus_1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.universal_a);
 
+        stopwatch = new Stopwatch(Rus_1.this);
+        dbHelper = new DBHelper(this);
+        database = dbHelper.getWritableDatabase();
+
         final ImageView img_left = (ImageView) findViewById(R.id.img_left);
         final ImageView img_right = (ImageView) findViewById(R.id.img_right);
         //Скругление углов
         img_left.setClipToOutline(true);
         img_right.setClipToOutline(true);
         //Скругление углов
+
+        //Определяем пользователя нч
+        if(Login.userInfo!=null){
+            if(Login.userInfo.userName!=null){
+                userName = Login.userInfo.userName;
+            }
+        }
+
+        String selection = DBHelper.COLUMN_NAME + " = ?";
+        String[] selectionArgs = new String[] {String.valueOf(userName)};
+        Cursor c = database.query(DBHelper.TABLE_USERS, null, selection, selectionArgs, null, null, null);
+        if(c.moveToFirst()){
+            userId  = c.getInt(c.getColumnIndexOrThrow (DBHelper.COLUMN_ID));
+        }
+        c.close();
+        //Определяем пользователя кц
+
         catSd = MediaPlayer.create(this,R.raw.lettersdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
         truesd = MediaPlayer.create(this,R.raw.truesd);
@@ -99,6 +132,8 @@ public class Rus_1 extends AppCompatActivity {
         btncontinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stopwatch = new Stopwatch(Rus_1.this);
+                stopwatch.startChronometer();
                 dialog.dismiss();
                 catSd.stop();
                 switch (numTask){
@@ -124,7 +159,7 @@ public class Rus_1 extends AppCompatActivity {
         window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
         View layout = getLayoutInflater().inflate(R.layout.dialoghelp, null);
 
-        dialogHelp.setContentView(R.layout.dialoghelp);
+        dialogHelp.setContentView(layout);
         dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogHelp
                 .getWindow()
@@ -134,6 +169,15 @@ public class Rus_1 extends AppCompatActivity {
         Uri numVideoUri= Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.letters);
         videoView.setVideoURI(numVideoUri);
         videoView.start();
+
+        Button openVid = (Button) dialogHelp.findViewById(R.id.butOpenVid);
+        openVid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=ZtEkItEQYMw&t=388s"));
+                startActivity(i);
+            }
+        });
 
         Button but_cont = (Button)dialogHelp.findViewById(R.id.buttoncont);
         but_cont.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +208,7 @@ public class Rus_1 extends AppCompatActivity {
         dialogEnd.setContentView(R.layout.dialogend);
         dialogEnd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogEnd.setCancelable(false);
+        bestTime = (TextView) dialogEnd.findViewById(R.id.bestTime);
         //Продолжить - нч
         Button btncont = (Button)dialogEnd.findViewById(R.id.butcont);
         btncont.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +222,16 @@ public class Rus_1 extends AppCompatActivity {
                 }
                 endlvl.stop();
                 dialogEnd.dismiss();
+            }
+        });
+
+        Button btndel = (Button) dialogEnd.findViewById(R.id.deleteRec);
+        btndel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String selectionDel = DBHelper.COLUMN_LVL + " = ?" + " AND " + DBHelper.COLUMN_US_ID + " = ?";
+                String[] selectionArgsDel = new String[] {Integer.toString(lvl), Integer.toString(userId)};
+                database.delete(DBHelper.TABLE_RECORDS, selectionDel,selectionArgsDel);
             }
         });
         //Диалоговое окно в конце уровня - кц
@@ -356,7 +411,32 @@ public class Rus_1 extends AppCompatActivity {
                             break;
                     }
                     if(count==20){
-                       endlvl.start();
+                        switch (numTask){
+                            case 0:
+                                vowel.stop();
+                                try {
+                                    vowel.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 1:
+                                consonant.stop();
+                                try {
+                                    consonant.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                        }
+                        stopwatch.pauseChronometer();
+                        TextView timeTw = (TextView) dialogEnd.findViewById(R.id.time);
+                        time = stopwatch.getStringTime();
+                        timeTw.setText(time);
+                        dbUpdate();
+                        bestScore = showBestScore(bestScore,userId);
+                        bestTime.setText(bestScore);
+                        endlvl.start();
                         dialogEnd.show();
                     }
                     else {
@@ -526,6 +606,31 @@ public class Rus_1 extends AppCompatActivity {
                             break;
                     }
                     if(count==20){
+                        switch (numTask){
+                            case 0:
+                                vowel.stop();
+                                try {
+                                    vowel.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 1:
+                                consonant.stop();
+                                try {
+                                    consonant.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                        }
+                        stopwatch.pauseChronometer();
+                        TextView timeTw = (TextView) dialogEnd.findViewById(R.id.time);
+                        time = stopwatch.getStringTime();
+                        timeTw.setText(time);
+                        dbUpdate();
+                        bestScore = showBestScore(bestScore,userId);
+                        bestTime.setText(bestScore);
                         endlvl.start();
                         dialogEnd.show();
                     }
@@ -556,6 +661,27 @@ public class Rus_1 extends AppCompatActivity {
 
         });
         //Нажатие на правую картинку кц
+
+    }
+
+    public static String showBestScore(String bestTime, int usId){
+        String selection = DBHelper.COLUMN_LVL + " = ?" + " AND " + DBHelper.COLUMN_US_ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(lvl), Integer.toString(usId)};
+        String[] columns = new String[]{"min(time) as time"};
+        Cursor c = database.query(DBHelper.TABLE_RECORDS,columns ,selection, selectionArgs, null, null, null);
+        if(c.moveToFirst()){
+            bestTime = c.getString(c.getColumnIndexOrThrow (DBHelper.COLUMN_TIME));
+        }
+        c.close();
+        return bestTime;
+    }
+    public static void dbUpdate(){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBHelper.COLUMN_LVL, lvl);
+        contentValues.put(DBHelper.COLUMN_TIME, time);
+        contentValues.put(DBHelper.COLUMN_US_ID, userId);
+        database.insert(DBHelper.TABLE_RECORDS, null, contentValues);
 
     }
 

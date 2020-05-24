@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -49,7 +52,15 @@ public class Math_2 extends AppCompatActivity {
     private MediaPlayer endlvl;
     private MediaPlayer truesd;
     private MediaPlayer falsesd;
-
+    public static int lvl = 2;
+    private Stopwatch stopwatch;
+    public static String time;
+    static DBHelper dbHelper;
+    public TextView bestTime;
+    public static SQLiteDatabase database;
+    public String userName;
+    public static int userId;
+    public static String bestScore;
     Array array = new Array();
     Random random = new Random();
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -61,6 +72,9 @@ public class Math_2 extends AppCompatActivity {
         final ImageView img_2 = (ImageView) findViewById(R.id.img_right_top);
         final ImageView img_3 = (ImageView) findViewById(R.id.img_left_bot);
         final ImageView img_4 = (ImageView) findViewById(R.id.img_right_bot);
+        stopwatch = new Stopwatch(Math_2.this);
+        dbHelper = new DBHelper(this);
+        database = dbHelper.getWritableDatabase();
         //Скругление углов
         img_1.setClipToOutline(true);
         img_2.setClipToOutline(true);
@@ -68,10 +82,27 @@ public class Math_2 extends AppCompatActivity {
         img_4.setClipToOutline(true);
         //Скругление углов
 
+        //Определяем пользователя нч
+        if(Login.userInfo!=null){
+            if(Login.userInfo.userName!=null){
+                userName = Login.userInfo.userName;
+            }
+        }
+
+        String selection = DBHelper.COLUMN_NAME + " = ?";
+        String[] selectionArgs = new String[] {String.valueOf(userName)};
+        Cursor c = database.query(DBHelper.TABLE_USERS, null, selection, selectionArgs, null, null, null);
+        if(c.moveToFirst()){
+            userId  = c.getInt(c.getColumnIndexOrThrow (DBHelper.COLUMN_ID));
+        }
+        c.close();
+        //Определяем пользователя кц
+
         catSd = MediaPlayer.create(this,R.raw.figuresdescp);
         endlvl = MediaPlayer.create(this,R.raw.complete);
         truesd = MediaPlayer.create(this,R.raw.truesd);
         falsesd = MediaPlayer.create(this,R.raw.falsesd);
+
 
         //Игра на весь икран - нч
         Window w = getWindow();
@@ -169,6 +200,7 @@ public class Math_2 extends AppCompatActivity {
                         rectangle.start();
                         break;
                 }
+                stopwatch.startChronometer();
             }
         });
         //Продолжить - кц
@@ -194,6 +226,14 @@ public class Math_2 extends AppCompatActivity {
         Uri logVideoUri= Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.figures);
         videoView.setVideoURI(logVideoUri);
 
+        Button openVid = (Button) dialogHelp.findViewById(R.id.butOpenVid);
+        openVid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=P-qXldITFkE"));
+                startActivity(i);
+            }
+        });
 
         Button but_cont = (Button)dialogHelp.findViewById(R.id.buttoncont);
         but_cont.setOnClickListener(new View.OnClickListener() {
@@ -216,6 +256,7 @@ public class Math_2 extends AppCompatActivity {
         dialogEnd.setContentView(R.layout.dialogend);
         dialogEnd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogEnd.setCancelable(false);
+        bestTime = (TextView) dialogEnd.findViewById(R.id.bestTime);
         //Продолжить - нч
         Button btncont = (Button)dialogEnd.findViewById(R.id.butcont);
         btncont.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +270,16 @@ public class Math_2 extends AppCompatActivity {
                 }
                 endlvl.stop();
                 dialogEnd.dismiss();
+            }
+        });
+
+        Button btndel = (Button) dialogEnd.findViewById(R.id.deleteRec);
+        btndel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String selectionDel = DBHelper.COLUMN_LVL + " = ?" + " AND " + DBHelper.COLUMN_US_ID + " = ?";
+                String[] selectionArgsDel = new String[] {Integer.toString(lvl), Integer.toString(userId)};
+                database.delete(DBHelper.TABLE_RECORDS, selectionDel,selectionArgsDel);
             }
         });
         //Диалоговое окно в конце уровня - кц
@@ -297,21 +348,51 @@ public class Math_2 extends AppCompatActivity {
                     switch (numArr){
                         case 0:
                             cirlce.stop();
+                            try {
+                                cirlce.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 1:
                             square.stop();
+                            try {
+                                square.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 2:
                             star.stop();
+                            try {
+                                star.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 3:
                             triangle.stop();
+                            try {
+                                triangle.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 4:
                             heart.stop();
+                            try {
+                                heart.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 5:
                             rectangle.stop();
+                            try {
+                                rectangle.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                     }
                     img_2.setEnabled(false);
@@ -371,7 +452,64 @@ public class Math_2 extends AppCompatActivity {
 
                     }
                     if(count==20){
+                        switch (numArr){
+                            case 0:
+                                cirlce.stop();
+                                try {
+                                    cirlce.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 1:
+                                square.stop();
+                                try {
+                                    square.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 2:
+                                star.stop();
+                                try {
+                                    star.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 3:
+                                triangle.stop();
+                                try {
+                                    triangle.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 4:
+                                heart.stop();
+                                try {
+                                    heart.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 5:
+                                rectangle.stop();
+                                try {
+                                    rectangle.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                        }
                        endlvl.start();
+                        stopwatch.pauseChronometer();
+                        TextView timeTw = (TextView) dialogEnd.findViewById(R.id.time);
+                        time = stopwatch.getStringTime();
+                        timeTw.setText(time);
+                        dbUpdate();
+                        bestScore = showBestScore(bestScore,userId);
+                        bestTime.setText(bestScore);
                         dialogEnd.show();
                     }
                     else {
@@ -443,21 +581,51 @@ public class Math_2 extends AppCompatActivity {
                     switch (numArr){
                         case 0:
                             cirlce.stop();
+                            try {
+                                cirlce.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 1:
                             square.stop();
+                            try {
+                                square.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 2:
                             star.stop();
+                            try {
+                                star.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 3:
                             triangle.stop();
+                            try {
+                                triangle.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 4:
                             heart.stop();
+                            try {
+                                heart.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 5:
                             rectangle.stop();
+                            try {
+                                rectangle.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                     }
                     img_1.setEnabled(false);
@@ -517,7 +685,64 @@ public class Math_2 extends AppCompatActivity {
 
                     }
                     if(count==20){
+                        switch (numArr){
+                            case 0:
+                                cirlce.stop();
+                                try {
+                                    cirlce.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 1:
+                                square.stop();
+                                try {
+                                    square.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 2:
+                                star.stop();
+                                try {
+                                    star.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 3:
+                                triangle.stop();
+                                try {
+                                    triangle.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 4:
+                                heart.stop();
+                                try {
+                                    heart.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 5:
+                                rectangle.stop();
+                                try {
+                                    rectangle.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                        }
                         endlvl.start();
+                        stopwatch.pauseChronometer();
+                        TextView timeTw = (TextView) dialogEnd.findViewById(R.id.time);
+                        time = stopwatch.getStringTime();
+                        timeTw.setText(time);
+                        dbUpdate();
+                        bestScore = showBestScore(bestScore,userId);
+                        bestTime.setText(bestScore);
                         dialogEnd.show();
                     }
                     else {
@@ -589,21 +814,51 @@ public class Math_2 extends AppCompatActivity {
                     switch (numArr){
                         case 0:
                             cirlce.stop();
+                            try {
+                                cirlce.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 1:
                             square.stop();
+                            try {
+                                square.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 2:
                             star.stop();
+                            try {
+                                star.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 3:
                             triangle.stop();
+                            try {
+                                triangle.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 4:
                             heart.stop();
+                            try {
+                                heart.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 5:
                             rectangle.stop();
+                            try {
+                                rectangle.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                     }
                     img_1.setEnabled(false);
@@ -663,7 +918,64 @@ public class Math_2 extends AppCompatActivity {
 
                     }
                     if(count==20){
+                        switch (numArr){
+                            case 0:
+                                cirlce.stop();
+                                try {
+                                    cirlce.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 1:
+                                square.stop();
+                                try {
+                                    square.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 2:
+                                star.stop();
+                                try {
+                                    star.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 3:
+                                triangle.stop();
+                                try {
+                                    triangle.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 4:
+                                heart.stop();
+                                try {
+                                    heart.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 5:
+                                rectangle.stop();
+                                try {
+                                    rectangle.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                        }
                         endlvl.start();
+                        stopwatch.pauseChronometer();
+                        TextView timeTw = (TextView) dialogEnd.findViewById(R.id.time);
+                        time = stopwatch.getStringTime();
+                        timeTw.setText(time);
+                        dbUpdate();
+                        bestScore = showBestScore(bestScore,userId);
+                        bestTime.setText(bestScore);
                         dialogEnd.show();
                     }
                     else {
@@ -737,21 +1049,51 @@ public class Math_2 extends AppCompatActivity {
                     switch (numArr){
                         case 0:
                             cirlce.stop();
+                            try {
+                                cirlce.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 1:
                             square.stop();
+                            try {
+                                square.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 2:
                             star.stop();
+                            try {
+                                star.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 3:
                             triangle.stop();
+                            try {
+                                triangle.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 4:
                             heart.stop();
+                            try {
+                                heart.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 5:
                             rectangle.stop();
+                            try {
+                                rectangle.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             break;
                     }
                     img_1.setEnabled(false);
@@ -811,7 +1153,64 @@ public class Math_2 extends AppCompatActivity {
 
                     }
                     if(count==20){
+                        switch (numArr){
+                            case 0:
+                                cirlce.stop();
+                                try {
+                                    cirlce.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 1:
+                                square.stop();
+                                try {
+                                    square.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 2:
+                                star.stop();
+                                try {
+                                    star.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 3:
+                                triangle.stop();
+                                try {
+                                    triangle.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 4:
+                                heart.stop();
+                                try {
+                                    heart.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            case 5:
+                                rectangle.stop();
+                                try {
+                                    rectangle.prepare();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                        }
                         endlvl.start();
+                        stopwatch.pauseChronometer();
+                        TextView timeTw = (TextView) dialogEnd.findViewById(R.id.time);
+                        time = stopwatch.getStringTime();
+                        timeTw.setText(time);
+                        dbUpdate();
+                        bestScore = showBestScore(bestScore,userId);
+                        bestTime.setText(bestScore);
                         dialogEnd.show();
                     }
                     else {
@@ -875,15 +1274,26 @@ public class Math_2 extends AppCompatActivity {
 
     }
 
-
-    private void releaseMp(MediaPlayer sd) {
-        if (sd != null) {
-            try {
-                sd.release();
-                sd = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public static String showBestScore(String bestTime, int usId){
+        String selection = DBHelper.COLUMN_LVL + " = ?" + " AND " + DBHelper.COLUMN_US_ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(lvl), Integer.toString(usId)};
+        String[] columns = new String[]{"min(time) as time"};
+        Cursor c = database.query(DBHelper.TABLE_RECORDS,columns ,selection, selectionArgs, null, null, null);
+        if(c.moveToFirst()){
+            bestTime = c.getString(c.getColumnIndexOrThrow (DBHelper.COLUMN_TIME));
         }
+        c.close();
+        return bestTime;
     }
+
+    public static void dbUpdate(){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBHelper.COLUMN_LVL, lvl);
+        contentValues.put(DBHelper.COLUMN_TIME, time);
+        contentValues.put(DBHelper.COLUMN_US_ID, userId);
+        database.insert(DBHelper.TABLE_RECORDS, null, contentValues);
+
+    }
+
 }

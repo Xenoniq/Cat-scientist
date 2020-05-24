@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView cat;
     private MediaPlayer hello;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 hello.stop();
                 try {
-                    Intent intent = new Intent(MainActivity.this, Categories.class);
+                    Intent intent = new Intent(MainActivity.this, Login.class);
                     startActivity(intent);finish();
                 }catch (Exception e) {
 

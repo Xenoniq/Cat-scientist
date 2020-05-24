@@ -22,23 +22,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_weight="1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your time: "
+                android:text="@string/your_time"
                 android:id="@+id/your_time"
+                android:padding="5dp"
                 android:textColor="@color/colorPurp1"
-                android:textSize="20sp"
+                android:textSize="24dp"
+                android:textStyle="bold"
                 android:layout_marginTop="5dp"
                 android:gravity="center">
             </TextView>
@@ -46,9 +48,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
+                android:padding="5dp"
                 android:id="@+id/time"
+                android:textSize="24dp"
+                android:textStyle="bold"
                 android:textColor="@color/colorPurp1"
-                android:textSize="20sp"
                 android:layout_marginTop="5dp"
                 android:gravity="center">
             </TextView>
@@ -56,17 +60,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_weight="1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Best time: "
+                android:text="@string/best_time"
                 android:id="@+id/best_time"
+                android:padding="5dp"
                 android:textColor="@color/colorPurp1"
-                android:textSize="20sp"
+                android:textSize="24dp"
+                android:textStyle="bold"
                 android:layout_marginTop="5dp"
                 android:gravity="center">
             </TextView>
@@ -74,9 +80,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
+                android:padding="5dp"
                 android:id="@+id/bestTime"
                 android:textColor="@color/colorPurp1"
-                android:textSize="20sp"
+                android:textSize="24dp"
+                android:textStyle="bold"
                 android:layout_marginTop="5dp"
                 android:gravity="center">
             </TextView>
@@ -90,7 +98,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center">
 
 
@@ -101,7 +109,8 @@
             android:text="@string/lvl_end"
             android:layout_weight="20"
             android:textColor="@color/colorPurp1"
-            android:textSize="20sp"
+            android:textSize="24dp"
+            android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:gravity="center">
         </TextView>
@@ -115,9 +124,25 @@
             android:text="@string/Continue"
             android:textColor="@color/colorPurp1"
             android:textStyle="bold"
+            android:layout_marginBottom="5dp"
             android:padding="10dp">
 
         </Button>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/deleteRec"
+            android:background="@drawable/button_detete"
+            android:layout_weight="10"
+            android:text="@string/deletUserRec"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/colorPurp1"
+            android:textStyle="bold"
+            android:padding="10dp">
+
+        </Button>
+
 
     </LinearLayout>
 

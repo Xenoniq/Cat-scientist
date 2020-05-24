@@ -16,7 +16,21 @@
         <VideoView
             android:id="@+id/vidHelp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/butOpenVid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_levels"
+            android:padding="5dp"
+            android:text="@string/openVid"
+            android:textColor="@color/colorPurp1"
+            android:textStyle="bold">
+        </Button>
 
         <Button
             android:id="@+id/buttoncont"

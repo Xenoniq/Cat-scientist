@@ -31,4 +31,11 @@
     <string name="world">Домашние и дикие животные</string>
     <string name="wild">Дикое</string>
     <string name="pet">Домашнее</string>
+    <string name="Login">Войти</string>
+    <string name="userName">Имя пользователя</string>
+    <string name="yourName">Вводи своё имя и жми Войти</string>
+    <string name="your_time">Время:</string>
+    <string name="best_time">Лучшее время:</string>
+    <string name="deletUserRec">Сбросить мои рекорды</string>
+    <string name="openVid">Автор(Открыть в браузере)</string>
 </resources>

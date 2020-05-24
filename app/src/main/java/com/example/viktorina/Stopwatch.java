@@ -38,6 +38,6 @@ public class Stopwatch {
     }
 
     public String getStringTime(){
-        return DateFormat.format("HH:mm:ss", new Date(pauseOffset)).toString();
+        return DateFormat.format("mm:ss", new Date(pauseOffset)).toString();
     }
 }

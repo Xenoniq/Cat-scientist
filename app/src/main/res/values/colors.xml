@@ -9,5 +9,6 @@
     <color name="colorPurp1">#59054B</color>
     <color name="colorBlue1">#85D0CC</color>
     <color name="colorPink">#E16379</color>
+    <color name="colorPinkDark">#C6A32B40</color>
     <color name="colorOrang1">#FDD184</color>
 </resources>

@@ -4,7 +4,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -43,19 +46,47 @@ public class Math_1 extends AppCompatActivity {
     private MediaPlayer endlvl;
     private MediaPlayer truesd;
     private MediaPlayer falsesd;
-    Stopwatch stopwatch;
-
+    public static int lvl = 1;
+    private Stopwatch stopwatch;
+    public static String time;
+    static DBHelper dbHelper;
+    public TextView bestTime;
+    public static String bestScore;
+    public static SQLiteDatabase database;
+    public String userName;
+    public static int userId;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.universal);
+        stopwatch = new Stopwatch(Math_1.this);
+        dbHelper = new DBHelper(this);
+        database = dbHelper.getWritableDatabase();
         final ImageView img_left = (ImageView) findViewById(R.id.img_left);
         final ImageView img_right = (ImageView) findViewById(R.id.img_right);
         //Скругление углов
         img_left.setClipToOutline(true);
         img_right.setClipToOutline(true);
         //Скругление углов
+
+        //Определяем пользователя нч
+        if(Login.userInfo!=null){
+            if(Login.userInfo.userName!=null){
+                userName = Login.userInfo.userName;
+            }
+        }
+
+        String selection = DBHelper.COLUMN_NAME + " = ?";
+        String[] selectionArgs = new String[] {String.valueOf(userName)};
+        Cursor c = database.query(DBHelper.TABLE_USERS, null, selection, selectionArgs, null, null, null);
+        if(c.moveToFirst()){
+            userId  = c.getInt(c.getColumnIndexOrThrow (DBHelper.COLUMN_ID));
+        }
+        c.close();
+        //Определяем пользователя кц
+
+
 
         catSd = MediaPlayer.create(this, R.raw.numsdescp);
         endlvl = MediaPlayer.create(this, R.raw.complete);
@@ -98,7 +129,6 @@ public class Math_1 extends AppCompatActivity {
             public void onClick(View v) {
                 catSd.stop();
                 dialog.dismiss();
-                stopwatch = new Stopwatch(Math_1.this);
                 stopwatch.startChronometer();
             }
         });
@@ -115,7 +145,6 @@ public class Math_1 extends AppCompatActivity {
         window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
         View layout = getLayoutInflater().inflate(R.layout.dialoghelp, null);
 
-
         dialogHelp.setContentView(layout);
         dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogHelp
@@ -125,7 +154,6 @@ public class Math_1 extends AppCompatActivity {
         final VideoView videoView = (VideoView) dialogHelp.findViewById(R.id.vidHelp);
         Uri numVideoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.nums);
         videoView.setVideoURI(numVideoUri);
-
 
         Button but_cont = (Button) dialogHelp.findViewById(R.id.buttoncont);
         but_cont.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +165,14 @@ public class Math_1 extends AppCompatActivity {
                 } catch (Exception e) {
 
                 }
+            }
+        });
+        Button openVid = (Button) dialogHelp.findViewById(R.id.butOpenVid);
+        openVid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=hq5Jr9StrLM&t=3s"));
+                startActivity(i);
             }
         });
         //Диалоговое окно помощь - кц
@@ -158,7 +194,8 @@ public class Math_1 extends AppCompatActivity {
         dialogEnd.setContentView(R.layout.dialogend);
         dialogEnd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogEnd.setCancelable(false);
-        //Продолжить - нч
+        bestTime = (TextView) dialogEnd.findViewById(R.id.bestTime);
+        //Продолжить
         Button btncont = (Button) dialogEnd.findViewById(R.id.butcont);
         btncont.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +211,17 @@ public class Math_1 extends AppCompatActivity {
                 dialogEnd.dismiss();
             }
         });
+        //Удалить рекорды юзера
+        Button btndel = (Button) dialogEnd.findViewById(R.id.deleteRec);
+        btndel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String selectionDel = DBHelper.COLUMN_LVL + " = ?" + " AND " + DBHelper.COLUMN_US_ID + " = ?";
+                String[] selectionArgsDel = new String[] {Integer.toString(lvl), Integer.toString(userId)};
+                database.delete(DBHelper.TABLE_RECORDS, selectionDel,selectionArgsDel);
+            }
+        });
+
         //Диалоговое окно в конце уровня - кц
         //Кнопка назад - нч
         Button button_back = (Button) findViewById(R.id.button_back);
@@ -271,8 +319,12 @@ public class Math_1 extends AppCompatActivity {
                     if (count == 20) {
                         endlvl.start();
                         stopwatch.pauseChronometer();
-                        TextView time = (TextView) dialogEnd.findViewById(R.id.time);
-                        time.setText(stopwatch.getStringTime());
+                        TextView timeTw = (TextView) dialogEnd.findViewById(R.id.time);
+                        time = stopwatch.getStringTime();
+                        timeTw.setText(time);
+                        dbUpdate();
+                        bestScore = showBestScore(bestScore,userId);
+                        bestTime.setText(bestScore);
                         dialogEnd.show();
                     } else {
                         numLeft = random.nextInt(10);
@@ -290,6 +342,7 @@ public class Math_1 extends AppCompatActivity {
 
                     }
                 }
+
                 return true;
             }
         });
@@ -353,8 +406,12 @@ public class Math_1 extends AppCompatActivity {
                     if (count == 20) {
                         endlvl.start();
                         stopwatch.pauseChronometer();
-                        TextView time = (TextView) dialogEnd.findViewById(R.id.time);
-                        time.setText(stopwatch.getStringTime());
+                        time = stopwatch.getStringTime();
+                        TextView timeTw = (TextView) dialogEnd.findViewById(R.id.time);
+                        timeTw.setText(time);
+                        dbUpdate();
+                        bestScore = showBestScore(bestScore,userId);
+                        bestTime.setText(bestScore);
                         dialogEnd.show();
                     } else {
                         numLeft = random.nextInt(10);
@@ -372,10 +429,34 @@ public class Math_1 extends AppCompatActivity {
 
                     }
                 }
+
                 return true;
             }
         });
         //Нажатие на правую картинку кц
+
+    }
+
+    public static void dbUpdate(){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBHelper.COLUMN_LVL, lvl);
+        contentValues.put(DBHelper.COLUMN_TIME, time);
+        contentValues.put(DBHelper.COLUMN_US_ID, userId);
+        database.insert(DBHelper.TABLE_RECORDS, null, contentValues);
+
+    }
+
+    public static String showBestScore(String bestTime, int usId){
+        String selection = DBHelper.COLUMN_LVL + " = ?" + " AND " + DBHelper.COLUMN_US_ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(lvl), Integer.toString(usId)};
+        String[] columns = new String[]{"min(time) as time"};
+        Cursor c = database.query(DBHelper.TABLE_RECORDS,columns ,selection, selectionArgs, null, null, null);
+        if(c.moveToFirst()){
+            bestTime = c.getString(c.getColumnIndexOrThrow (DBHelper.COLUMN_TIME));
+        }
+        c.close();
+        return bestTime;
     }
 
     //Системная кнопка назад - начало
